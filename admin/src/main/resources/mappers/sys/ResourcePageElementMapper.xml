@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.code.infrastructure.tunnel.datatunnel.database.sys.ResourcePageElementDAO">
+    <resultMap id="BaseResultMap" type="com.story.code.infrastructure.tunnel.dataobject.sys.ResourcePageElementDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                code,
+        create_by,
+        del_flag,
+        gmt_create,
+        gmt_modified,
+        id,
+        modified_by,
+        remarks,
+        tenant_id,
+        version
+    </sql>
+
+    <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource_page_element
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from sys_resource_page_element
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.ResourcePageElementDO">
+        INSERT INTO sys_resource_page_element (
+                    code,
+            create_by,
+            del_flag,
+            gmt_create,
+            gmt_modified,
+            modified_by,
+            remarks,
+            tenant_id,
+            version
+        ) values(
+                    #{code, jdbcType=VARCHAR},
+            #{createBy, jdbcType=VARCHAR},
+            #{delFlag, jdbcType=TINYINT},
+            #{gmtCreate, jdbcType=TIMESTAMP},
+            #{gmtModified, jdbcType=TIMESTAMP},
+            #{modifiedBy, jdbcType=VARCHAR},
+            #{remarks, jdbcType=VARCHAR},
+            #{tenantId, jdbcType=BIGINT},
+            #{version, jdbcType=BIGINT}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.ResourcePageElementDO">
+        UPDATE sys_resource_page_element set
+                    code = #{code, jdbcType=VARCHAR},
+            create_by = #{createBy, jdbcType=VARCHAR},
+            del_flag = #{delFlag, jdbcType=TINYINT},
+            gmt_create = #{gmtCreate, jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified, jdbcType=TIMESTAMP},
+            modified_by = #{modifiedBy, jdbcType=VARCHAR},
+            remarks = #{remarks, jdbcType=VARCHAR},
+            tenant_id = #{tenantId, jdbcType=BIGINT},
+            version = #{version, jdbcType=BIGINT}
+        where id =  #{id, jdbcType=BIGINT}
+    </update>
+
+</mapper>
+
+
+

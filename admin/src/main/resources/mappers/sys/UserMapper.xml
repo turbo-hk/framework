@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.code.infrastructure.tunnel.datatunnel.database.sys.UserDAO">
+    <resultMap id="BaseResultMap" type="com.story.code.infrastructure.tunnel.dataobject.sys.UserDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
+        <result column="organization_id" jdbcType="BIGINT" property="organizationId"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="salt" jdbcType="VARCHAR" property="salt"/>
+        <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                create_by,
+        del_flag,
+        gmt_create,
+        gmt_modified,
+        id,
+        login_name,
+        mobile,
+        modified_by,
+        organization_id,
+        password,
+        remarks,
+        salt,
+        tel,
+        tenant_id,
+        version
+    </sql>
+
+    <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from sys_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.UserDO">
+        INSERT INTO sys_user (
+                    create_by,
+            del_flag,
+            gmt_create,
+            gmt_modified,
+            login_name,
+            mobile,
+            modified_by,
+            organization_id,
+            password,
+            remarks,
+            salt,
+            tel,
+            tenant_id,
+            version
+        ) values(
+                    #{createBy, jdbcType=VARCHAR},
+            #{delFlag, jdbcType=TINYINT},
+            #{gmtCreate, jdbcType=TIMESTAMP},
+            #{gmtModified, jdbcType=TIMESTAMP},
+            #{loginName, jdbcType=VARCHAR},
+            #{mobile, jdbcType=VARCHAR},
+            #{modifiedBy, jdbcType=VARCHAR},
+            #{organizationId, jdbcType=BIGINT},
+            #{password, jdbcType=VARCHAR},
+            #{remarks, jdbcType=VARCHAR},
+            #{salt, jdbcType=VARCHAR},
+            #{tel, jdbcType=VARCHAR},
+            #{tenantId, jdbcType=BIGINT},
+            #{version, jdbcType=BIGINT}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.UserDO">
+        UPDATE sys_user set
+                    create_by = #{createBy, jdbcType=VARCHAR},
+            del_flag = #{delFlag, jdbcType=TINYINT},
+            gmt_create = #{gmtCreate, jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified, jdbcType=TIMESTAMP},
+            login_name = #{loginName, jdbcType=VARCHAR},
+            mobile = #{mobile, jdbcType=VARCHAR},
+            modified_by = #{modifiedBy, jdbcType=VARCHAR},
+            organization_id = #{organizationId, jdbcType=BIGINT},
+            password = #{password, jdbcType=VARCHAR},
+            remarks = #{remarks, jdbcType=VARCHAR},
+            salt = #{salt, jdbcType=VARCHAR},
+            tel = #{tel, jdbcType=VARCHAR},
+            tenant_id = #{tenantId, jdbcType=BIGINT},
+            version = #{version, jdbcType=BIGINT}
+        where id =  #{id, jdbcType=BIGINT}
+    </update>
+
+</mapper>
+
+
+

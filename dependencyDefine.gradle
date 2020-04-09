@@ -1,0 +1,9 @@
+ext.versions = [
+        dozer: '5.5.1',
+        guava: "$GUAVA_VERSION"
+]
+
+ext.libraries = [
+        "dozer": "net.sf.dozer:dozer:${versions.dozer}",
+        "guava": "com.google.guava:guava:${versions.guava}"
+]

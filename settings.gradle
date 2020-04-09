@@ -1,0 +1,11 @@
+pluginManagement {
+    plugins {
+        id 'org.springframework.boot' version "${SPRING_BOOT_VERSION}"
+        id 'io.spring.dependency-management' version "${SPRING_IO_VERSION}"
+    }
+}
+rootProject.name = 'framework'
+include 'helper'
+include 'admin'
+include 'component-page'
+

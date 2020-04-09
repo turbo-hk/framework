@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 minutes">
+    <!-- ==================================================================================== -->
+    <springProperty scope="context" name="logDir" source="logging.home" defaultValue="../logs"/>
+    <springProperty scope="context" name="logName" source="spring.application.name" defaultValue="log"/>
+    <!-- 打印到控制台 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- ==================================================================================== -->
+    <!-- Debug日志 -->
+    <appender name="debuglog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDir}/debug/${logName}.debug.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/debug/${logName}.log.%d{yyyy-MM-dd}.%i.log.gz
+            </fileNamePattern>
+            <maxHistory>3</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 当文件大小超过60M时触发滚动,这里设置60M -->
+                <maxFileSize>60MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- Info日志 -->
+    <appender name="infolog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDir}/info/${logName}.info.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/info/${logName}.%d{yyyy-MM-dd.HH}.%i.log.gz
+            </fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>60MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- warn日志 -->
+    <appender name="warnlog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDir}/warn/${logName}.warn.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/warn/${logName}.log.%d{yyyy-MM-dd}.%i.log.gz
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 当文件大小超过60M时触发滚动,这里设置60M -->
+                <maxFileSize>60MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- error日志 -->
+    <appender name="errorlog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDir}/error/${logName}.error.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/error/${logName}.log.%d{yyyy-MM-dd}.%i.log.gz
+            </fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 当文件大小超过60M时触发滚动,这里设置60M -->
+                <maxFileSize>60MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!-- 全量日志 -->
+    <appender name="log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logDir}/${logName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logDir}/${logName}.log.%d{yyyy-MM-dd}.%i.log.gz
+            </fileNamePattern>
+            <!-- 日志最大保留1天-->
+            <maxHistory>1</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level-%logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 异步日志配置 -->
+    <appender name="debuglog_async" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>2048</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="debuglog" />
+    </appender>
+    <appender name="infolog_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>2048</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="infolog" />
+    </appender>
+    <appender name="warnlog_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>2048</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="warnlog"/>
+    </appender>
+    <appender name="errorlog_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>2048</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="errorlog"/>
+    </appender>
+    <appender name="log_async" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>2048</queueSize>
+        <includeCallerData>true</includeCallerData>
+        <appender-ref ref="log"/>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="debuglog_async"/>
+        <appender-ref ref="infolog_async"/>
+        <appender-ref ref="warnlog_async"/>
+        <appender-ref ref="errorlog_async"/>
+        <appender-ref ref="log_async"/>
+    </root>
+
+    <logger name="druid.sql" level="info"/>
+    <logger name="org.mybatis.spring" level="info"/>
+    <logger name="com.alibaba.druid.pool" level="info"/>
+    <logger name="org.springframework.jdbc.datasource" level="info"/>
+
+</configuration>

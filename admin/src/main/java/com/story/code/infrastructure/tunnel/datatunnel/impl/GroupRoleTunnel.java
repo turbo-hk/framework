@@ -1,0 +1,46 @@
+/**
+* Copyright (c) 2019, Credan(上海)-版权所有
+*/
+package com.story.code.infrastructure.tunnel.datatunnel.impl;
+
+import com.story.code.infrastructure.tunnel.dataobject.sys.GroupRoleDO;
+import com.story.code.infrastructure.tunnel.datatunnel.GroupRoleTunnelI;
+import com.story.code.infrastructure.tunnel.datatunnel.database.sys.GroupRoleDAO;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+
+/**
+*
+*
+* @author storys.zhang@gmail.com
+*
+* Created at 2020-03-26 16:19:40 by Storys.Zhang
+*/
+@Component
+public class GroupRoleTunnel implements GroupRoleTunnelI{
+
+    @Resource
+    private GroupRoleDAO dao;
+
+    @Override
+    public GroupRoleDO get(Long id){
+        return dao.get(id);
+    }
+
+    @Override
+    public int delete(Long id){
+        return dao.delete(id);
+    }
+
+    @Override
+    public int create(GroupRoleDO record){
+        return dao.insert(record);
+    }
+
+    @Override
+    public int update(GroupRoleDO record){
+        return dao.update(record);
+    }
+
+}

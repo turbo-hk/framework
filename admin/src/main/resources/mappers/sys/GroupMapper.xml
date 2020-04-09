@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.story.code.infrastructure.tunnel.datatunnel.database.sys.GroupDAO">
+    <resultMap id="BaseResultMap" type="com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+        <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
+        <result column="version" jdbcType="BIGINT" property="version"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                create_by,
+        del_flag,
+        gmt_create,
+        gmt_modified,
+        id,
+        modified_by,
+        name,
+        parent_id,
+        remarks,
+        tenant_id,
+        version
+    </sql>
+
+    <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_group
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Long">
+        delete from sys_group
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO">
+        INSERT INTO sys_group (
+                    create_by,
+            del_flag,
+            gmt_create,
+            gmt_modified,
+            modified_by,
+            name,
+            parent_id,
+            remarks,
+            tenant_id,
+            version
+        ) values(
+                    #{createBy, jdbcType=VARCHAR},
+            #{delFlag, jdbcType=TINYINT},
+            #{gmtCreate, jdbcType=TIMESTAMP},
+            #{gmtModified, jdbcType=TIMESTAMP},
+            #{modifiedBy, jdbcType=VARCHAR},
+            #{name, jdbcType=VARCHAR},
+            #{parentId, jdbcType=BIGINT},
+            #{remarks, jdbcType=VARCHAR},
+            #{tenantId, jdbcType=BIGINT},
+            #{version, jdbcType=BIGINT}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO">
+        UPDATE sys_group set
+                    create_by = #{createBy, jdbcType=VARCHAR},
+            del_flag = #{delFlag, jdbcType=TINYINT},
+            gmt_create = #{gmtCreate, jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified, jdbcType=TIMESTAMP},
+            modified_by = #{modifiedBy, jdbcType=VARCHAR},
+            name = #{name, jdbcType=VARCHAR},
+            parent_id = #{parentId, jdbcType=BIGINT},
+            remarks = #{remarks, jdbcType=VARCHAR},
+            tenant_id = #{tenantId, jdbcType=BIGINT},
+            version = #{version, jdbcType=BIGINT}
+        where id =  #{id, jdbcType=BIGINT}
+    </update>
+
+</mapper>
+
+
+
