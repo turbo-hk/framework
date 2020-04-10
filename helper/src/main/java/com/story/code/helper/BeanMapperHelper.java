@@ -12,7 +12,10 @@ import org.dozer.DozerBeanMapper;
  */
 public final class BeanMapperHelper {
 
-    private static DozerBeanMapper dozer = new DozerBeanMapper();
+    /**
+     * 单例对象
+     */
+    private static DozerBeanMapper dozerBeanMapper = new DozerBeanMapper();
 
     /**
      * 基于Dozer转换对象的类型.
@@ -23,7 +26,7 @@ public final class BeanMapperHelper {
      * @return
      */
     public static <T> T map(Object source, Class<T> destinationClass) {
-        return dozer.map(source, destinationClass);
+        return dozerBeanMapper.map(source, destinationClass);
     }
 
     /**
@@ -37,7 +40,7 @@ public final class BeanMapperHelper {
     public static <T> List<T> mapList(Collection<?> sourceList, Class<T> destinationClass) {
         List<T> destinationList = Lists.newArrayList();
         for (Object sourceObject : sourceList) {
-            T destinationObject = dozer.map(sourceObject, destinationClass);
+            T destinationObject = dozerBeanMapper.map(sourceObject, destinationClass);
             destinationList.add(destinationObject);
         }
         return destinationList;
@@ -50,6 +53,6 @@ public final class BeanMapperHelper {
      * @param destinationObject
      */
     public static void copy(Object source, Object destinationObject) {
-        dozer.map(source, destinationObject);
+        dozerBeanMapper.map(source, destinationObject);
     }
 }

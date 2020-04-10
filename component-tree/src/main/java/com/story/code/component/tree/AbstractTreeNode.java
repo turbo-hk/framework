@@ -1,8 +1,7 @@
-package com.story.code.component.tree.vo;
+package com.story.code.component.tree;
 
 import java.util.List;
 import java.util.Optional;
-import javax.swing.tree.TreeNode;
 
 /**
  * 树结构
@@ -11,7 +10,7 @@ import javax.swing.tree.TreeNode;
  * <p>
  * Created at 2020/4/9 by Storys.Zhang
  */
-public abstract class AbstractTreeNode<ID> implements Comparable<AbstractTreeNode> {
+public abstract class AbstractTreeNode<ID, T extends AbstractTreeNode> implements Comparable<T> {
 
     /**
      * 树节点ID
@@ -39,25 +38,26 @@ public abstract class AbstractTreeNode<ID> implements Comparable<AbstractTreeNod
     private Integer sortNo;
 
     /**
-     * 树节点链接
-     */
-    private String linkUrl;
-
-    /**
-     * 树节点图标
-     */
-    private String icon;
-
-    /**
      * 子菜单
      */
-    private List<TreeNode> children;
+    private List<T> children;
 
     @Override
-    public int compareTo(AbstractTreeNode o) {
-        return Optional.ofNullable(this.getSortNo()).orElse(0).compareTo(Optional.ofNullable(o.getSortNo()).orElse(0));
+    public int compareTo(T o) {
+        return Optional.ofNullable(this.sortNo).orElse(0).compareTo(Optional.ofNullable(o.getSortNo()).orElse(0));
     }
 
+    @Override
+    public String toString() {
+        return "AbstractTreeNode{" +
+            "id=" + id +
+            ", parentId=" + parentId +
+            ", name='" + name + '\'' +
+            ", code='" + code + '\'' +
+            ", sortNo=" + sortNo +
+            ", children=" + children +
+            '}';
+    }
 
     public ID getId() {
         return id;
@@ -65,6 +65,14 @@ public abstract class AbstractTreeNode<ID> implements Comparable<AbstractTreeNod
 
     public void setId(ID id) {
         this.id = id;
+    }
+
+    public ID getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(ID parentId) {
+        this.parentId = parentId;
     }
 
     public String getName() {
@@ -83,43 +91,19 @@ public abstract class AbstractTreeNode<ID> implements Comparable<AbstractTreeNod
         this.code = code;
     }
 
-    public String getLinkUrl() {
-        return linkUrl;
-    }
-
-    public void setLinkUrl(String linkUrl) {
-        this.linkUrl = linkUrl;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public ID getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(ID parentId) {
-        this.parentId = parentId;
-    }
-
-    public List<TreeNode> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<TreeNode> children) {
-        this.children = children;
-    }
-
     public Integer getSortNo() {
         return sortNo;
     }
 
     public void setSortNo(Integer sortNo) {
         this.sortNo = sortNo;
+    }
+
+    public List<T> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<T> children) {
+        this.children = children;
     }
 }

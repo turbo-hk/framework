@@ -8,4 +8,5 @@ rootProject.name = 'framework'
 include 'helper'
 include 'admin'
 include 'component-page'
+include 'component-tree'
 
