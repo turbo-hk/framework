@@ -10,6 +10,7 @@ import com.story.code.app.sys.query.MenuPageListQuery;
 import com.story.code.app.sys.vo.MenuPageListVO;
 import com.story.code.common.ApiResponseVO;
 import com.story.code.common.DefaultVO;
+import com.story.code.common.page.PageWrapper;
 import com.story.code.component.page.vo.PageVO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.ResourceMenuDO;
 import com.story.code.infrastructure.tunnel.datatunnel.ResourceMenuTunnelI;
@@ -40,6 +41,13 @@ public class MenuService {
         pageVO.setTotal(pageInfo.getTotal());
         pageVO.setData(pageInfo.getList());
         return ApiResponseVO.<PageVO<MenuPageListVO>>create().data(pageVO).buildSuccess();
+    }
+
+    public ApiResponseVO<PageVO<MenuPageListVO>> page2(MenuPageListQuery query) {
+        PageWrapper<ResourceMenuDO, MenuPageListVO, MenuPageListQuery> pageWrapper = query1 -> resourceMenuTunnel.pageList(menuConverter.toParam(query1));
+        PageVO page = pageWrapper.page(query, query.getPage(), data -> menuConverter.doToVo(data));
+        System.out.println(page);
+        return ApiResponseVO.<PageVO<MenuPageListVO>>create().data(page).buildSuccess();
     }
 
     public ApiResponseVO<DefaultVO> add(MenuPersistCommand command) {

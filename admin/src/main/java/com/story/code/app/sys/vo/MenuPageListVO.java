@@ -14,4 +14,6 @@ import lombok.EqualsAndHashCode;
 public class MenuPageListVO extends AbstractPageVO<MenuPageListVO> {
 
 
+    private String name;
+
 }

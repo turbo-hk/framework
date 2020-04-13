@@ -32,7 +32,7 @@ public class MenuController {
     }
     @PostMapping("/page2")
     public ApiResponseVO<PageVO<MenuPageListVO>> page2(@RequestBody MenuPageListQuery query){
-        return service.page(query);
+        return service.page2(query);
     }
 
     @PostMapping("/add")
