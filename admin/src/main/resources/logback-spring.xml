@@ -41,7 +41,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logDir}/info/${logName}.%d{yyyy-MM-dd.HH}.%i.log.gz
+            <fileNamePattern>${logDir}/info/${logName}.%d{yyyy-MM-dd}.%i.log.gz
             </fileNamePattern>
             <maxHistory>7</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">

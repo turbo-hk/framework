@@ -1,11 +1,16 @@
 archivesBaseName = "admin"
 
-apply plugin : "org.springframework.boot"
-apply plugin : "io.spring.dependency-management"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    //redis依赖commons - pool
+    compile("org.apache.commons:commons-pool2:$COMMONS_POOL2_VERSION")
 
     //test
     testImplementation('org.springframework.boot:spring-boot-starter-test') {

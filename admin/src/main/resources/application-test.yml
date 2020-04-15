@@ -3,6 +3,10 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/story?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull
     username: root
     password: 123456
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
 logging:
   level:
     com.story.code: debug
