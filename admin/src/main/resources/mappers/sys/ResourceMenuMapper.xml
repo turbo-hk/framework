@@ -96,6 +96,10 @@
         select <include refid="Base_Column_List" /> from sys_resource_menu where del_flag = #{DEL_FLAG}
     </select>
 
+    <select id="listAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from sys_resource_menu where del_flag = 0
+    </select>
+
 </mapper>
 
 

@@ -20,4 +20,14 @@ public final class StringHelper {
     public static boolean isBlank(final CharSequence cs) {
         return StringUtils.isBlank(cs);
     }
+
+    /**
+     * 判断不为空，去除两边空格
+     *
+     * @param cs
+     * @return
+     */
+    public static boolean isNotBlank(final CharSequence cs) {
+        return StringUtils.isNotBlank(cs);
+    }
 }

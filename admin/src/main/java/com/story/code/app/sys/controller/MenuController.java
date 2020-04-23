@@ -8,6 +8,7 @@ import com.story.code.common.ApiResponseVO;
 import com.story.code.common.DefaultVO;
 import com.story.code.component.page.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class MenuController {
         return Mono.just(service.page(query));
     }
     @PostMapping("/page2")
-    public ApiResponseVO<PageVO<MenuPageListVO>> page2(@RequestBody MenuPageListQuery query){
+    public ApiResponseVO<PageVO<MenuPageListVO>> page2(@RequestBody MenuPageListQuery query, Authentication authentication){
         return service.page2(query);
     }
 

@@ -3,7 +3,9 @@
 */
 package com.story.code.infrastructure.tunnel.dataobject.sys;
 
+import com.story.code.infrastructure.tunnel.AbstractDO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -14,22 +16,8 @@ import lombok.Data;
 * Created at 2020-03-26 16:20:36 by Storys.Zhang
 */
 @Data
-public class UserDO{
-
-    /** 创建人 */
-    private String createBy;
-
-    /** 删除标识1：已删除、0：未删除 */
-    private Boolean delFlag;
-
-    /** 创建时间 */
-    private java.time.LocalDateTime gmtCreate;
-
-    /** 最后更新时间 */
-    private java.time.LocalDateTime gmtModified;
-
-    /** 无符号自增唯一ID */
-    private Long id;
+@EqualsAndHashCode(callSuper = false)
+public class UserDO extends AbstractDO {
 
     /**  */
     private String loginName;
@@ -37,17 +25,11 @@ public class UserDO{
     /**  */
     private String mobile;
 
-    /** 修改人 */
-    private String modifiedBy;
-
     /** 组织机构ID */
     private Long organizationId;
 
     /**  */
     private String password;
-
-    /** 备注 */
-    private String remarks;
 
     /**  */
     private String salt;
@@ -58,7 +40,5 @@ public class UserDO{
     /** 租户ID */
     private Long tenantId;
 
-    /** 数据版本 */
-    private Long version;
 
 }

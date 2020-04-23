@@ -2,6 +2,7 @@ archivesBaseName = "helper"
 dependencies {
     compile(
             libraries."dozer",
-            libraries."guava"
+            libraries."guava",
+            libraries."fastjson"
     )
 }
