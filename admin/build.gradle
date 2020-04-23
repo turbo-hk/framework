@@ -34,7 +34,7 @@ dependencies {
     implementation "com.github.pagehelper:pagehelper-spring-boot-starter:$PAGEHELPER_VERSION"
 
 
-    compile project(':helper')
+    compile project(':component-helper')
     compile project(':component-page')
 }
 

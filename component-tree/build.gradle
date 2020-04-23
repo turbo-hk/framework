@@ -1,9 +1,13 @@
 archivesBaseName = "component-tree"
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile(
+            libraries."fastjson"
+    )
 
-    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.68'
+    testCompile(
+            libraries."junit"
+    )
 
-    compile project(':helper')
+    compile project(':component-helper')
 }

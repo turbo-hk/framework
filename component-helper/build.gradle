@@ -5,4 +5,8 @@ dependencies {
             libraries."guava",
             libraries."fastjson"
     )
+
+    testCompile(
+            libraries."junit"
+    )
 }

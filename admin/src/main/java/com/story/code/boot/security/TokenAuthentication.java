@@ -1,7 +1,6 @@
 package com.story.code.boot.security;
 
 import java.util.Collection;
-import java.util.Collections;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +20,7 @@ public class TokenAuthentication extends UsernamePasswordAuthenticationToken {
     private String token;
 
     public TokenAuthentication(String token, Object principal, Object credentials) {
-        super(principal, credentials, Collections.EMPTY_LIST);
+        super(principal, credentials);
         this.token = token;
     }
 

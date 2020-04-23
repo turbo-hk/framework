@@ -5,7 +5,7 @@ pluginManagement {
     }
 }
 rootProject.name = 'framework'
-include 'helper'
+include 'component-helper'
 include 'admin'
 include 'component-page'
 include 'component-tree'

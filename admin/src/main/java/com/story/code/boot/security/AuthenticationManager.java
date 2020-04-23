@@ -35,19 +35,19 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 
     @Override
     public Mono<Authentication> authenticate(Authentication authentication) {
-
         if (authentication.isAuthenticated()) {
             return Mono.just(authentication);
         }
         return Mono.just(authentication)
             .switchIfEmpty(Mono.defer(this::raiseBadCredentials))
-            .cast(UsernamePasswordAuthenticationToken.class)
+            .cast(TokenAuthentication.class)
             .flatMap(authenticationToken -> authenticateToken(authenticationToken))
             .publishOn(scheduler)
             .onErrorResume(e -> raiseBadCredentials(e))
-            .filter(userDetails -> passwordEncoder.matches((String) authentication.getCredentials(), userDetails.getPassword()))
+            .filter(userDetails -> passwordEncoder
+                .matches((String) authentication.getCredentials(), userDetails.getPassword(), ((AuthenticationUser) userDetails).getSalt()))
             .switchIfEmpty(Mono.defer(() -> raiseBadCredentials()))
-            .map(u -> new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), u.getAuthorities()));
+            .map(u -> new TokenAuthentication(( (TokenAuthentication)authentication).getToken(), authentication.getPrincipal(), authentication.getCredentials(), u.getAuthorities()));
     }
 
     private <T> Mono<T> raiseBadCredentials() {
