@@ -84,7 +84,7 @@ public class SecurityConfiguration {
 
     @Bean
     public AuthenticationManager authenticationManager() {
-        return new AuthenticationManager(reactiveUserDetailsService(), passwordEncoder());
+        return new AuthenticationManager(reactiveUserDetailsService(), passwordEncoder(), tokenProvider());
     }
 
     @Bean
@@ -95,11 +95,16 @@ public class SecurityConfiguration {
 
     @Bean
     public ReactiveServerSecurityContextRepository serverSecurityContextRepository() {
-        return new ReactiveServerSecurityContextRepository();
+        return new ReactiveServerSecurityContextRepository(tokenProvider());
     }
 
     @Bean
     public ReactiveServerAuthenticationSuccessHandler serverAuthenticationSuccessHandler() {
         return new ReactiveServerAuthenticationSuccessHandler();
+    }
+
+    @Bean
+    public TokenProvider tokenProvider() {
+        return new TokenProvider((DatabaseReactiveUserDetailService) reactiveUserDetailsService());
     }
 }

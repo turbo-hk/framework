@@ -15,6 +15,7 @@ public class SecurityService {
     public ApiResponseVO<LoginVO> login(String token) {
         LoginVO vo = new LoginVO();
         vo.setToken(token);
+
         return ApiResponseVO.<LoginVO>create().data(vo).buildSuccess();
     }
 

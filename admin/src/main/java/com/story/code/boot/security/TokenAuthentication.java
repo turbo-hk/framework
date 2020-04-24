@@ -19,9 +19,12 @@ public class TokenAuthentication extends UsernamePasswordAuthenticationToken {
     @Getter
     private String token;
 
-    public TokenAuthentication(String token, Object principal, Object credentials) {
+    @Setter
+    @Getter
+    private AuthenticationUser user;
+
+    public TokenAuthentication(Object principal, Object credentials) {
         super(principal, credentials);
-        this.token = token;
     }
 
     public TokenAuthentication(String token, Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {

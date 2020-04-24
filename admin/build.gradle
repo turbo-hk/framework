@@ -12,7 +12,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     //redis
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
     //redis依赖commons - pool
     compile("org.apache.commons:commons-pool2:$COMMONS_POOL2_VERSION")
 

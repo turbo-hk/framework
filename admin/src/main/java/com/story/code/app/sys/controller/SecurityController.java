@@ -3,12 +3,11 @@ package com.story.code.app.sys.controller;
 import com.story.code.app.sys.command.LoginCommand;
 import com.story.code.app.sys.service.SecurityService;
 import com.story.code.app.sys.vo.LoginVO;
+import com.story.code.boot.security.AuthenticationManager;
 import com.story.code.boot.security.ReactiveServerSecurityContextRepository;
 import com.story.code.boot.security.TokenAuthentication;
-import com.story.code.boot.security.AuthenticationManager;
 import com.story.code.common.ApiResponseVO;
 import java.util.Objects;
-import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
@@ -32,7 +31,7 @@ import reactor.core.scheduler.Schedulers;
 public class SecurityController {
 
     @Autowired
-    private AuthenticationManager jwtAuthenticationManager;
+    private AuthenticationManager authenticationManager;
     @Autowired
     private SecurityService securityService;
     @Autowired
@@ -40,16 +39,18 @@ public class SecurityController {
 
     @RequestMapping("/login")
     private Mono<ApiResponseVO<LoginVO>> login(@RequestBody LoginCommand command, ServerWebExchange exchange) {
-        final String token = UUID.randomUUID().toString().replaceAll("-", "");
-        TokenAuthentication tokenAuthentication = new TokenAuthentication(token, command.getLoginName(), command.getPassword());
         return Mono.just(command)
             .filter(Objects::nonNull)
-            .map(loginVo -> this.jwtAuthenticationManager.authenticate(tokenAuthentication))
+            .map(loginVo -> this.authenticationManager.authenticate(new TokenAuthentication(command.getLoginName(), command.getPassword())))
             .flatMap(authenticationMono -> authenticationMono)
             .subscribeOn(Schedulers.elastic())
             .doOnSuccess(ReactiveSecurityContextHolder::withAuthentication)
-            .doOnSuccess(auth -> serverSecurityContextRepository.save(exchange, new SecurityContextImpl(tokenAuthentication)))
-            .map(authentication -> securityService.login(token))
+            .map(auth -> serverSecurityContextRepository.saveToken(exchange, new SecurityContextImpl(auth)))
+            .flatMap(authenticationMono -> authenticationMono)
+            .map(authentication -> securityService.login(((TokenAuthentication) authentication).getToken()))
+/*            .doOnSuccess(c -> {
+                log.info("{}, Login Success, Token={}", command.getLoginName(), c.getData());
+            })*/
             .switchIfEmpty(Mono.error(new UsernameNotFoundException("Bad request")));
     }
 }

@@ -43,4 +43,15 @@ public final class StringHelper {
     public static String nullToEmpty(final String cs) {
         return Strings.nullToEmpty(cs);
     }
+
+    /**
+     * 字符串拼接
+     *
+     * @param elements
+     * @param <T>
+     * @return
+     */
+    public static <T> String join(final T... elements) {
+        return StringUtils.join(elements);
+    }
 }

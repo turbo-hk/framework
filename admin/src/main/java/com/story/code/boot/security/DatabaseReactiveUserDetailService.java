@@ -37,6 +37,15 @@ public class DatabaseReactiveUserDetailService implements ReactiveUserDetailsSer
             .just(userDetail);
     }
 
+    public Mono<UserDetails> findByUserId(Long userId){
+        UserDO user = userTunnel.get(userId);
+        AuthenticationUser userDetail = new AuthenticationUser(user.getId(), user.getLoginName(), user.getPassword(), Lists.newArrayList());
+        userDetail.setTenantId(user.getTenantId());
+        userDetail.setSalt(user.getSalt());
+        return Mono
+            .just(userDetail);
+    }
+
     private String[] getRoleNames(UserDO user) {
         List<String> roleNames = Lists.newArrayList();
         //todo 用户角色

@@ -27,10 +27,13 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 
     private LoginPasswordEncoder passwordEncoder;
 
-    public AuthenticationManager(ReactiveUserDetailsService reactiveUserDetailsService, LoginPasswordEncoder passwordEncoder) {
+    private TokenProvider tokenProvider;
+
+    public AuthenticationManager(ReactiveUserDetailsService reactiveUserDetailsService, LoginPasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
         this.reactiveUserDetailsService = reactiveUserDetailsService;
         this.scheduler = Schedulers.parallel();
         this.passwordEncoder = passwordEncoder;
+        this.tokenProvider = tokenProvider;
     }
 
     @Override
@@ -47,7 +50,13 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
             .filter(userDetails -> passwordEncoder
                 .matches((String) authentication.getCredentials(), userDetails.getPassword(), ((AuthenticationUser) userDetails).getSalt()))
             .switchIfEmpty(Mono.defer(() -> raiseBadCredentials()))
-            .map(u -> new TokenAuthentication(( (TokenAuthentication)authentication).getToken(), authentication.getPrincipal(), authentication.getCredentials(), u.getAuthorities()));
+            .map(u -> {
+                TokenAuthentication tokenAuthentication = new TokenAuthentication(tokenProvider.createToken((AuthenticationUser) u), authentication.getPrincipal(),
+                    authentication.getCredentials(),
+                    u.getAuthorities());
+                tokenAuthentication.setUser((AuthenticationUser)u);
+                return tokenAuthentication;
+            });
     }
 
     private <T> Mono<T> raiseBadCredentials() {

@@ -1,6 +1,7 @@
 package com.story.code.boot.redis;
 
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
 
 /**
  * @author storys.zhang@gmail.com
@@ -9,9 +10,9 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 public class Hash {
 
-    private RedisTemplate<String, Object> redisTemplate;
+    private ReactiveRedisTemplate redisTemplate;
 
-    public Hash(RedisTemplate<String, Object> redisTemplate) {
+    public Hash(ReactiveRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 }

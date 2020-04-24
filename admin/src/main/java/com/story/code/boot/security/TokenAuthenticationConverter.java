@@ -28,7 +28,7 @@ public class TokenAuthenticationConverter implements Function<ServerWebExchange,
             .filter(matchBearerLength)
             .map(isolateBearerValue)
             .filter(token -> !StringHelper.isBlank(token))
-            .map(SecurityUtils::getAuthentication)
+            .flatMap(SecurityUtils::getAuthentication)
             .filter(Objects::nonNull);
     }
 }

@@ -1,8 +1,9 @@
 package com.story.code.boot.redis;
 
 import javax.annotation.PostConstruct;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,7 +17,8 @@ import org.springframework.stereotype.Component;
 public class RedisOps {
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    @Getter
+    private ReactiveRedisTemplate redisTemplate;
 
     @PostConstruct
     public void init() {

@@ -32,4 +32,22 @@ public class RsaTest {
         System.out.println(rsaKeyPair3.getPrivateKey().equals(rsaKeyPair4.getPrivateKey()));
 
     }
+
+    @Test
+    public void testSign() throws Exception {
+        RsaKeyPair rsaKeyPair = RsaHelper.generateKeyPair("hdzfw");
+        String text = "123456账";
+        String encrypt = RsaHelper.encrypt(rsaKeyPair.getPrivateKey(), text);
+        System.out.println("encrypt： " + encrypt);
+
+        String decrypt = RsaHelper.decrypt(rsaKeyPair.getPublicKey(), encrypt);
+        System.out.println("decrypt: " + decrypt);
+
+        String sign = RsaHelper.sign(rsaKeyPair.getPrivateKey(), encrypt);
+        System.out.println("sign：" + sign);
+
+        boolean verify = RsaHelper.verify(encrypt, sign, rsaKeyPair.getPublicKey());
+        System.out.println("verify: " + verify);
+
+    }
 }

@@ -1,8 +1,10 @@
 package com.story.code.boot.redis;
 
 import com.story.code.helper.StringHelper;
-import java.util.concurrent.TimeUnit;
-import org.springframework.data.redis.core.RedisTemplate;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import reactor.core.publisher.Mono;
 
 /**
  * Redis普通Value操作
@@ -13,22 +15,21 @@ import org.springframework.data.redis.core.RedisTemplate;
  */
 public class Value {
 
-    private RedisTemplate<String, Object> redisTemplate;
+    private ReactiveRedisTemplate redisTemplate;
 
-    public Value(RedisTemplate<String, Object> redisTemplate) {
+    public Value(ReactiveRedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
-    public <T> T get(String key, Class<T> tClass) {
-        return StringHelper.isBlank(key) ? null : (T) redisTemplate.opsForValue().get(key);
+    public <V> Mono<V> get(String key) {
+        return StringHelper.isBlank(key) ? Mono.empty() : redisTemplate.opsForValue().get(key);
     }
 
-    public boolean set(String key, Object value, long time) {
+    public <V> Mono<Boolean> set(String key, V value, long time, ChronoUnit timeUnit) {
         if (time > 0) {
-            redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
+            return redisTemplate.opsForValue().set(key, value, Duration.of(time, timeUnit));
         } else {
-            redisTemplate.opsForValue().set(key, value);
+            return redisTemplate.opsForValue().set(key, value);
         }
-        return true;
     }
 }

@@ -106,5 +106,4 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
         }
         return beanList;
     }
-
 }

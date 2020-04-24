@@ -1,11 +1,9 @@
 package com.story.code.boot.security;
 
-import com.story.code.helper.StringHelper;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import lombok.Getter;
+import java.util.Objects;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.server.context.ServerSecurityContextRepository;
 import org.springframework.web.server.ServerWebExchange;
@@ -18,14 +16,25 @@ import reactor.core.publisher.Mono;
  */
 public class ReactiveServerSecurityContextRepository implements ServerSecurityContextRepository {
 
-    @Getter
-    private final Map<String, SecurityContext> tokenCache = new ConcurrentHashMap<>();
+    private TokenProvider tokenProvider;
+
+    public ReactiveServerSecurityContextRepository(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
 
     @Override
     public Mono<Void> save(ServerWebExchange exchange, SecurityContext context) {
         if (context.getAuthentication() instanceof TokenAuthentication) {
             TokenAuthentication authentication = (TokenAuthentication) context.getAuthentication();
-            tokenCache.put(authentication.getToken(), context);
+            tokenProvider.saveToken(authentication.getToken(), context);
+        }
+        return Mono.empty();
+    }
+
+    public Mono<Authentication> saveToken(ServerWebExchange exchange, SecurityContext context) {
+        if (context.getAuthentication() instanceof TokenAuthentication) {
+            TokenAuthentication authentication = (TokenAuthentication) context.getAuthentication();
+            return tokenProvider.saveToken(authentication.getToken(), context).map(v -> context.getAuthentication());
         }
         return Mono.empty();
     }
@@ -34,9 +43,7 @@ public class ReactiveServerSecurityContextRepository implements ServerSecurityCo
     public Mono<SecurityContext> load(ServerWebExchange exchange) {
         ServerHttpRequest request = exchange.getRequest();
         String authorization = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-        if (StringHelper.isBlank(authorization) || !tokenCache.containsKey(authorization)) {
-            return Mono.empty();
-        }
-        return Mono.just(tokenCache.get(authorization));
+        return tokenProvider.validateToken(authorization).filter(Objects::nonNull).flatMap(auth -> tokenProvider.get(authorization));
+
     }
 }

@@ -17,9 +17,9 @@ spring:
     timeout: 3000
     lettuce:
       pool:
-        max-idle: 10
-        min-idle: 0
-        max-active: 10
+        max-idle: 20
+        min-idle: 5
+        max-active: 200
         max-wait: 1000
 mybatis:
   mapper-locations: classpath:mappers/*/*.xml
