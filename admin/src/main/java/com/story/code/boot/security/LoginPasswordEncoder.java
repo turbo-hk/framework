@@ -1,9 +1,7 @@
 package com.story.code.boot.security;
 
 import com.story.code.helper.StringHelper;
-import java.util.Base64;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
+import com.story.code.helper.crypto.LoginPasswordHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,12 +21,7 @@ public class LoginPasswordEncoder implements PasswordEncoder {
     public String encode(CharSequence cs, String salt) {
         log.debug("password encode , salt={} , password={} ", salt, cs);
         try {
-            byte[] result = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512")
-                .generateSecret(new PBEKeySpec(cs.toString().toCharArray(), StringHelper.nullToEmpty(salt).getBytes(),
-                    31, 512))
-                .getEncoded();
-            String s = Base64.getEncoder().encodeToString(result);
-            return s;
+            return LoginPasswordHelper.loginPassword(cs, salt);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
