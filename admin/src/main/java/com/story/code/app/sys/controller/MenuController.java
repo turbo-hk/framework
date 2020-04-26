@@ -4,11 +4,11 @@ import com.story.code.app.sys.command.MenuPersistCommand;
 import com.story.code.app.sys.query.MenuPageListQuery;
 import com.story.code.app.sys.service.MenuService;
 import com.story.code.app.sys.vo.MenuPageListVO;
+import com.story.code.boot.security.SecurityUtils;
 import com.story.code.common.ApiResponseVO;
 import com.story.code.common.DefaultVO;
 import com.story.code.component.page.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,21 +28,28 @@ public class MenuController {
     private MenuService service;
 
     @PostMapping("/page")
-    public Mono<ApiResponseVO<PageVO<MenuPageListVO>>> page(@RequestBody MenuPageListQuery query){
-        return Mono.just(service.page(query));
-    }
-    @PostMapping("/page2")
-    public ApiResponseVO<PageVO<MenuPageListVO>> page2(@RequestBody MenuPageListQuery query, Authentication authentication){
-        return service.page2(query);
+    public Mono<ApiResponseVO<PageVO<MenuPageListVO>>> page(@RequestBody MenuPageListQuery query) {
+        Mono<String> userFromRequest = SecurityUtils.getUserFromRequest();
+        return userFromRequest.map(f -> {
+            System.out.println(f);
+            return service.page(query);
+        }).doOnSuccess(c-> {
+            System.out.println(c);
+        });
     }
 
+/*    @PostMapping("/list")
+    public Mono<ApiResponseVO<MenuListVO>> list() {
+        return Mono.just(service.list(SecurityUtils.));
+    }*/
+
     @PostMapping("/add")
-    public Mono<ApiResponseVO<DefaultVO>> add(@RequestBody MenuPersistCommand command){
+    public Mono<ApiResponseVO<DefaultVO>> add(@RequestBody MenuPersistCommand command) {
         return Mono.just(service.add(command));
     }
 
     @PostMapping("/update")
-    public Mono<ApiResponseVO<DefaultVO>> update(@RequestBody MenuPersistCommand command){
+    public Mono<ApiResponseVO<DefaultVO>> update(@RequestBody MenuPersistCommand command) {
         return Mono.just(service.update(command));
     }
 

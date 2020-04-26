@@ -22,13 +22,15 @@ public class TokenAuthenticationConverter implements Function<ServerWebExchange,
 
     @Override
     public Mono<Authentication> apply(ServerWebExchange serverWebExchange) {
-       return Mono.justOrEmpty(serverWebExchange)
+        return Mono.justOrEmpty(serverWebExchange)
             .map(SecurityUtils::getTokenFromRequest)
             .filter(Objects::nonNull)
             .filter(matchBearerLength)
             .map(isolateBearerValue)
             .filter(token -> !StringHelper.isBlank(token))
             .flatMap(SecurityUtils::getAuthentication)
-            .filter(Objects::nonNull);
+            .filter(Objects::nonNull)
+          //  .switchIfEmpty(Mono.error(new RequiredLoginException("token is expired")))
+            ;
     }
 }

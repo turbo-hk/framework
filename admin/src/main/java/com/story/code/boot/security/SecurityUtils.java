@@ -1,8 +1,10 @@
 package com.story.code.boot.security;
 
 import com.story.code.boot.SpringContextHolder;
+import com.story.code.boot.security.request.ReactiveRequestContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -27,12 +29,12 @@ public class SecurityUtils {
         return tokenProvider.get(token).map(securityContext -> securityContext.getAuthentication());
     }
 
-/*    public static Mono<String> getUserFromRequest(ServerWebExchange serverWebExchange) {
-        return serverWebExchange.getPrincipal()
+    public static Mono<String> getUserFromRequest() {
+        return ReactiveRequestContextHolder.getRequest().flatMap(exchange -> exchange.getPrincipal()
             .cast(UsernamePasswordAuthenticationToken.class)
             .map(UsernamePasswordAuthenticationToken::getPrincipal)
             .cast(AuthenticationUser.class)
-            .map(AuthenticationUser::getUsername);
-    }*/
+            .map(AuthenticationUser::getUsername));
+    }
 
 }

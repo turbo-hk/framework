@@ -20,9 +20,9 @@ public class MenuConverter {
         return param;
     }
 
-    public MenuPageListVO doToVo(ResourceMenuDO data){
+    public MenuPageListVO doToVo(ResourceMenuDO data) {
         MenuPageListVO vo = new MenuPageListVO();
-        vo.setName(data.getTitle());
+        BeanMapperHelper.copy(data, vo);
         return vo;
     }
 

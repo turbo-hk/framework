@@ -48,9 +48,9 @@ public class SecurityController {
             .map(auth -> serverSecurityContextRepository.saveToken(exchange, new SecurityContextImpl(auth)))
             .flatMap(authenticationMono -> authenticationMono)
             .map(authentication -> securityService.login(((TokenAuthentication) authentication).getToken()))
-/*            .doOnSuccess(c -> {
+            .doOnSuccess(c -> {
                 log.info("{}, Login Success, Token={}", command.getLoginName(), c.getData());
-            })*/
+            })
             .switchIfEmpty(Mono.error(new UsernameNotFoundException("Bad request")));
     }
 }

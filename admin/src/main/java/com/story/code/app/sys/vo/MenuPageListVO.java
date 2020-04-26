@@ -1,8 +1,6 @@
 package com.story.code.app.sys.vo;
 
-import com.story.code.component.page.vo.AbstractPageVO;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * @author storys.zhang@gmail.com
@@ -10,10 +8,25 @@ import lombok.EqualsAndHashCode;
  * Created at 2020/3/31 by Storys.Zhang
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class MenuPageListVO extends AbstractPageVO<MenuPageListVO> {
+public class MenuPageListVO {
 
+    private Long id;
 
-    private String name;
+    private Long parentId;
+
+    /**
+     *
+     */
+    private String title;
+
+    /**
+     *
+     */
+    private String url;
+
+    /**
+     *
+     */
+    private String icon;
 
 }

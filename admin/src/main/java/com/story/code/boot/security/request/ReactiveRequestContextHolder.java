@@ -1,6 +1,6 @@
 package com.story.code.boot.security.request;
 
-import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 /**
@@ -10,9 +10,9 @@ import reactor.core.publisher.Mono;
  */
 public class ReactiveRequestContextHolder {
 
-    static final Class<ServerHttpRequest> CONTEXT_KEY = ServerHttpRequest.class;
+    static final Class<ServerWebExchange> CONTEXT_KEY = ServerWebExchange.class;
 
-    public static Mono<ServerHttpRequest> getRequest() {
+    public static Mono<ServerWebExchange> getRequest() {
         return Mono.subscriberContext()
             .map(ctx -> ctx.get(CONTEXT_KEY));
     }

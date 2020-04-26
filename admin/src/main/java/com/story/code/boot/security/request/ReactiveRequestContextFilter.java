@@ -24,6 +24,6 @@ public class ReactiveRequestContextFilter implements WebFilter {
         ServerHttpRequest request = exchange.getRequest();
         log.debug("绑定request");
         return chain.filter(exchange)
-            .subscriberContext(ctx -> ctx.put(ReactiveRequestContextHolder.CONTEXT_KEY, request));
+            .subscriberContext(ctx -> ctx.put(ReactiveRequestContextHolder.CONTEXT_KEY, exchange));
     }
 }
