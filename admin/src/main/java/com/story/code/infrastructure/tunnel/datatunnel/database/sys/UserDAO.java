@@ -3,6 +3,7 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
+import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,15 +14,7 @@ import org.apache.ibatis.annotations.Param;
  *
  * Created at 2020-03-26 16:20:36 by Storys.Zhang
  */
-public interface UserDAO{
-
-    /**
-     * select object by id
-     *
-     * @param id
-     * @return
-     */
-    UserDO get(@Param("id") Long id);
+public interface UserDAO extends AbstractDAO<UserDO> {
 
    /**
     * delete object by id
@@ -31,19 +24,12 @@ public interface UserDAO{
     */
     int delete(@Param("id") Long id);
 
-   /**
-    * insert
-    *
-    * @param record
-    * @return
-    */
-    int insert(UserDO record);
-
-   /**
-    * update
-    *
-    * @param record
-    * @return
-    */
-    int update(UserDO record);
+    /**
+     * 根据登录名称查询
+     *
+     * @param loginName
+     * @param tenantId
+     * @return
+     */
+    UserDO getByLoginName(@Param("loginName") String loginName, @Param("tenantId") Long tenantId);
 }

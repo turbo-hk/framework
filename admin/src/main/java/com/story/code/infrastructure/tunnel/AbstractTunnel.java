@@ -1,6 +1,6 @@
 package com.story.code.infrastructure.tunnel;
 
-import javax.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author storys.zhang@gmail.com
@@ -9,7 +9,7 @@ import javax.annotation.Resource;
  */
 public class AbstractTunnel<T extends AbstractDO, DAO extends AbstractDAO> implements AbstractTunnelI<T> {
 
-    @Resource
+    @Autowired
     protected DAO dao;
 
     @Override

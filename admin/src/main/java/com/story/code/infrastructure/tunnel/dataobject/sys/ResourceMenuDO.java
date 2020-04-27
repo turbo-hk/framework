@@ -42,5 +42,10 @@ public class ResourceMenuDO extends AbstractDO {
      */
     private String url;
 
+    /**
+     *
+     */
+    private String icon;
+
 
 }

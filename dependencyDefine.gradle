@@ -1,9 +1,13 @@
 ext.versions = [
         dozer: '5.5.1',
-        guava: "$GUAVA_VERSION"
+        guava: "$GUAVA_VERSION",
+        fastjson: "$FASTJSON_VAERSON",
+        junit: "$JUNIT_VERSION"
 ]
 
 ext.libraries = [
         "dozer": "net.sf.dozer:dozer:${versions.dozer}",
-        "guava": "com.google.guava:guava:${versions.guava}"
+        "guava": "com.google.guava:guava:${versions.guava}",
+        "fastjson": "com.alibaba:fastjson:${versions.fastjson}",
+        "junit": "junit:junit:${versions.junit}"
 ]

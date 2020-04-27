@@ -31,4 +31,11 @@ public interface ResourceMenuDAO extends AbstractDAO<ResourceMenuDO> {
      * @return
      */
     List<ResourceMenuDO> pageList(MenuPageListQuery query);
+
+    /**
+     * 查询所有菜单
+     *
+     * @return
+     */
+    List<ResourceMenuDO> listAll();
 }

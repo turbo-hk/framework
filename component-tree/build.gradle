@@ -1,0 +1,13 @@
+archivesBaseName = "component-tree"
+
+dependencies {
+    compile(
+            libraries."fastjson"
+    )
+
+    testCompile(
+            libraries."junit"
+    )
+
+    compile project(':component-helper')
+}

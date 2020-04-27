@@ -1,0 +1,12 @@
+archivesBaseName = "helper"
+dependencies {
+    compile(
+            libraries."dozer",
+            libraries."guava",
+            libraries."fastjson"
+    )
+
+    testCompile(
+            libraries."junit"
+    )
+}

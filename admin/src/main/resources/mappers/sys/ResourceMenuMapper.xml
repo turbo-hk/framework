@@ -93,7 +93,25 @@
     </update>
 
     <select id="pageList" parameterType="com.story.code.infrastructure.tunnel.query.sys.MenuPageListQuery" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from sys_resource_menu where del_flag = #{DEL_FLAG}
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource_menu
+        <where>
+            <if test="null != parentId">
+                AND parent_id = #{parentId, jdbcType=BIGINT}
+            </if>
+            <if test="null !=tenantId">
+                AND tenant_id = #{tenantId, jdbcType=BIGINT}
+            </if>
+            AND del_flag = #{DEL_FLAG}
+        </where>
+
+    </select>
+
+    <select id="listAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource_menu where del_flag = 0
     </select>
 
 </mapper>

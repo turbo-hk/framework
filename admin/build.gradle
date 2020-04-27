@@ -1,11 +1,25 @@
 archivesBaseName = "admin"
 
-apply plugin : "org.springframework.boot"
-apply plugin : "io.spring.dependency-management"
-
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+ext {
+    set('springCloudVersion', "Hoxton.SR3")
+}
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    //redis
+    // implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    //redis依赖commons - pool
+    compile("org.apache.commons:commons-pool2:$COMMONS_POOL2_VERSION")
+
+    //安全
+    //implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+    implementation 'org.springframework.cloud:spring-cloud-starter-security'
 
     //test
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -21,6 +35,12 @@ dependencies {
     implementation "com.github.pagehelper:pagehelper-spring-boot-starter:$PAGEHELPER_VERSION"
 
 
-    compile project(':helper')
+    compile project(':component-helper')
     compile project(':component-page')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }

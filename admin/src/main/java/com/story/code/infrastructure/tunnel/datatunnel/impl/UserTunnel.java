@@ -3,12 +3,11 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel.impl;
 
+import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import com.story.code.infrastructure.tunnel.datatunnel.UserTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.UserDAO;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
 *
@@ -18,15 +17,7 @@ import javax.annotation.Resource;
 * Created at 2020-03-26 16:20:36 by Storys.Zhang
 */
 @Component
-public class UserTunnel implements UserTunnelI{
-
-    @Resource
-    private UserDAO dao;
-
-    @Override
-    public UserDO get(Long id){
-        return dao.get(id);
-    }
+public class UserTunnel extends AbstractTunnel<UserDO, UserDAO> implements UserTunnelI{
 
     @Override
     public int delete(Long id){
@@ -34,13 +25,8 @@ public class UserTunnel implements UserTunnelI{
     }
 
     @Override
-    public int create(UserDO record){
-        return dao.insert(record);
-    }
-
-    @Override
-    public int update(UserDO record){
-        return dao.update(record);
+    public UserDO getByLoginName(String loginName, Long tenantId) {
+        return dao.getByLoginName(loginName, tenantId);
     }
 
 }

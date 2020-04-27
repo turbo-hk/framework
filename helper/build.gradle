@@ -1,7 +1,0 @@
-archivesBaseName = "helper"
-dependencies {
-    compile(
-            libraries."dozer",
-            libraries."guava"
-    )
-}
