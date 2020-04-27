@@ -1,11 +1,13 @@
 package com.story.code.boot.security;
 
+import com.google.common.base.Splitter;
 import com.story.code.boot.redis.RedisOps;
 import com.story.code.helper.StringHelper;
 import com.story.code.helper.UuidHelper;
 import com.story.code.helper.crypto.RsaHelper;
 import com.story.code.helper.crypto.RsaHelper.RsaKeyPair;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
 import lombok.SneakyThrows;
@@ -48,7 +50,8 @@ public class TokenProvider {
 
     @SneakyThrows
     public String createToken(AuthenticationUser user) {
-        String originToken = StringHelper.join(UuidHelper.uuid(), "^", user.getId());
+        String originToken = StringHelper.join(UuidHelper.uuid(), "^", user.getId(), "^", user.getUsername());
+        log.debug("加密前Token: {}", originToken);
         String encryptToken = RsaHelper.encrypt(rsaKeyPair.getPrivateKey(), originToken);
         return encryptToken;
     }
@@ -67,6 +70,14 @@ public class TokenProvider {
             return tokenAuthentication;
         }).map(tokenAuthentication -> new SecurityContextImpl(tokenAuthentication));*/
         return redisOps.value.get(redisKey);
+    }
+
+    @SneakyThrows
+    public Long getUserId(String token) {
+        String decryptToken = RsaHelper.decrypt(rsaKeyPair.getPublicKey(), token);
+        log.debug("解密后Token: {}", decryptToken);
+        List<String> splitToList = Splitter.on("^").splitToList(decryptToken);
+        return Long.valueOf(splitToList.get(1));
     }
 
     public Mono<Boolean> validateToken(String authToken) {

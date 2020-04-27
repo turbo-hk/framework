@@ -8,6 +8,7 @@ import com.story.code.boot.security.SecurityUtils;
 import com.story.code.common.ApiResponseVO;
 import com.story.code.common.DefaultVO;
 import com.story.code.component.page.vo.PageVO;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,14 +28,13 @@ public class MenuController {
     @Autowired
     private MenuService service;
 
+    @SneakyThrows
     @PostMapping("/page")
     public Mono<ApiResponseVO<PageVO<MenuPageListVO>>> page(@RequestBody MenuPageListQuery query) {
-        Mono<String> userFromRequest = SecurityUtils.getUserFromRequest();
-        return userFromRequest.map(f -> {
-            System.out.println(f);
-            return service.page(query);
-        }).doOnSuccess(c-> {
-            System.out.println(c);
+        //Mono<Long> userId = SecurityUtils.getUserId();
+
+        return SecurityUtils.getUserId().map(f -> service.page(query)).doOnSuccess(c -> {
+            System.out.println("----" + c);
         });
     }
 

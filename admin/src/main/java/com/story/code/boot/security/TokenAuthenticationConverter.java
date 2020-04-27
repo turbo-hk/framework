@@ -30,7 +30,14 @@ public class TokenAuthenticationConverter implements Function<ServerWebExchange,
             .filter(token -> !StringHelper.isBlank(token))
             .flatMap(SecurityUtils::getAuthentication)
             .filter(Objects::nonNull)
-          //  .switchIfEmpty(Mono.error(new RequiredLoginException("token is expired")))
+            //  .switchIfEmpty(Mono.error(new RequiredLoginException("token is expired")))
             ;
+    }
+
+    public static String formatToken(String token) {
+        if (matchBearerLength.test(token)) {
+            return isolateBearerValue.apply(token);
+        }
+        return null;
     }
 }
