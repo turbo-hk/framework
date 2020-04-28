@@ -3,6 +3,7 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel;
 
+import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
 
 
@@ -13,15 +14,7 @@ import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
 *
 * Created at 2020-03-26 16:20:24 by Storys.Zhang
 */
-public interface RoleTunnelI{
-
-    /**
-    * select object by id
-    *
-    * @param id
-    * @return
-    */
-    RoleDO get(Long id);
+public interface RoleTunnelI extends AbstractTunnelI<RoleDO> {
 
     /**
     * delete object by id
@@ -30,20 +23,4 @@ public interface RoleTunnelI{
     * @return
     */
     int delete(Long id);
-
-    /**
-    * create
-    *
-    * @param record
-    * @return
-    */
-    int create(RoleDO record);
-
-    /**
-    * update
-    *
-    * @param record
-    * @return
-    */
-    int update(RoleDO record);
 }

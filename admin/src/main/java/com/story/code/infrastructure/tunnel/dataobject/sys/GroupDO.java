@@ -3,6 +3,7 @@
 */
 package com.story.code.infrastructure.tunnel.dataobject.sys;
 
+import com.story.code.infrastructure.tunnel.AbstractDO;
 import lombok.Data;
 
 
@@ -14,25 +15,7 @@ import lombok.Data;
 * Created at 2020-03-26 16:19:00 by Storys.Zhang
 */
 @Data
-public class GroupDO{
-
-    /** 创建人 */
-    private String createBy;
-
-    /** 删除标识1：已删除、0：未删除 */
-    private Boolean delFlag;
-
-    /** 创建时间 */
-    private java.time.LocalDateTime gmtCreate;
-
-    /** 最后更新时间 */
-    private java.time.LocalDateTime gmtModified;
-
-    /** 无符号自增唯一ID */
-    private Long id;
-
-    /** 修改人 */
-    private String modifiedBy;
+public class GroupDO extends AbstractDO {
 
     /**  */
     private String name;
@@ -40,13 +23,7 @@ public class GroupDO{
     /** 父ID */
     private Long parentId;
 
-    /** 备注 */
-    private String remarks;
-
     /** 租户ID */
     private Long tenantId;
-
-    /** 数据版本 */
-    private Long version;
 
 }
