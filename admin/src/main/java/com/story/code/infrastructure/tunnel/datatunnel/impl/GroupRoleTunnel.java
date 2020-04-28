@@ -3,12 +3,12 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel.impl;
 
+import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupRoleDO;
 import com.story.code.infrastructure.tunnel.datatunnel.GroupRoleTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.GroupRoleDAO;
+import java.util.List;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
 *
@@ -18,15 +18,7 @@ import javax.annotation.Resource;
 * Created at 2020-03-26 16:19:40 by Storys.Zhang
 */
 @Component
-public class GroupRoleTunnel implements GroupRoleTunnelI{
-
-    @Resource
-    private GroupRoleDAO dao;
-
-    @Override
-    public GroupRoleDO get(Long id){
-        return dao.get(id);
-    }
+public class GroupRoleTunnel extends AbstractTunnel<GroupRoleDO, GroupRoleDAO> implements GroupRoleTunnelI{
 
     @Override
     public int delete(Long id){
@@ -34,13 +26,8 @@ public class GroupRoleTunnel implements GroupRoleTunnelI{
     }
 
     @Override
-    public int create(GroupRoleDO record){
-        return dao.insert(record);
-    }
-
-    @Override
-    public int update(GroupRoleDO record){
-        return dao.update(record);
+    public List<GroupRoleDO> listByGroupId(Long groupId) {
+        return dao.listByGroupId(groupId);
     }
 
 }

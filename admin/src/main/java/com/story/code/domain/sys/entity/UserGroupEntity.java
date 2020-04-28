@@ -1,5 +1,6 @@
 package com.story.code.domain.sys.entity;
 
+import com.story.code.domain.sys.repository.UserRoleRepository;
 import com.story.code.domain.sys.valueobject.RoleVO;
 import java.util.List;
 
@@ -10,10 +11,15 @@ import java.util.List;
  */
 public class UserGroupEntity {
 
-    private Long id;
+    private Long groupId;
+
+    private Long userId;
 
     private List<RoleVO> roleList;
 
-    private List<UserEntity> userList;
+    private UserRoleRepository userRoleRepository;
 
+    public List<RoleVO> getRoleList() {
+        return userRoleRepository.userGroupRoles(this.groupId);
+    }
 }

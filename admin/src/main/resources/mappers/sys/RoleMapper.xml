@@ -87,6 +87,13 @@
         where id =  #{id, jdbcType=BIGINT}
     </update>
 
+    <select id="listByIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from sys_role where id
+        <foreach collection="ids" open=" in (" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>
 
 

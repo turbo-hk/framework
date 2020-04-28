@@ -5,6 +5,7 @@ package com.story.code.infrastructure.tunnel.datatunnel;
 
 import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
+import java.util.List;
 
 
 /**
@@ -23,4 +24,12 @@ public interface RoleTunnelI extends AbstractTunnelI<RoleDO> {
     * @return
     */
     int delete(Long id);
+
+    /**
+     * 查询多个角色ID
+     *
+     * @param ids
+     * @return
+     */
+    List<RoleDO> listByIds(List<Long> ids);
 }

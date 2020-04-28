@@ -11,7 +11,6 @@
         <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
         <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
         <result column="role_id" jdbcType="BIGINT" property="roleId"/>
-        <result column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
         <result column="version" jdbcType="BIGINT" property="version"/>
     </resultMap>
 
@@ -25,7 +24,6 @@
         modified_by,
         remarks,
         role_id,
-        tenant_id,
         version
     </sql>
 
@@ -51,7 +49,6 @@
             modified_by,
             remarks,
             role_id,
-            tenant_id,
             version
         ) values(
                     #{createBy, jdbcType=VARCHAR},
@@ -62,7 +59,6 @@
             #{modifiedBy, jdbcType=VARCHAR},
             #{remarks, jdbcType=VARCHAR},
             #{roleId, jdbcType=BIGINT},
-            #{tenantId, jdbcType=BIGINT},
             #{version, jdbcType=BIGINT}
         )
     </insert>
@@ -77,10 +73,13 @@
             modified_by = #{modifiedBy, jdbcType=VARCHAR},
             remarks = #{remarks, jdbcType=VARCHAR},
             role_id = #{roleId, jdbcType=BIGINT},
-            tenant_id = #{tenantId, jdbcType=BIGINT},
             version = #{version, jdbcType=BIGINT}
         where id =  #{id, jdbcType=BIGINT}
     </update>
+
+    <select id="listByGroupId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />  from sys_group_role where group_id = #{groupId, jdbcType=BIGINT} and del_flag = 0
+    </select>
 
 </mapper>
 

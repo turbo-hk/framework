@@ -5,6 +5,7 @@ package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
 import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -24,4 +25,11 @@ public interface RoleDAO extends AbstractDAO<RoleDO> {
     */
     int delete(@Param("id") Long id);
 
+    /**
+     * 查询多个角色信息
+     *
+     * @param ids
+     * @return
+     */
+    List<RoleDO> listByIds(@Param("ids") List<Long> ids);
 }

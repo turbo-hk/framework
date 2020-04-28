@@ -3,7 +3,9 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel;
 
+import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupRoleDO;
+import java.util.List;
 
 
 /**
@@ -13,15 +15,7 @@ import com.story.code.infrastructure.tunnel.dataobject.sys.GroupRoleDO;
 *
 * Created at 2020-03-26 16:19:40 by Storys.Zhang
 */
-public interface GroupRoleTunnelI{
-
-    /**
-    * select object by id
-    *
-    * @param id
-    * @return
-    */
-    GroupRoleDO get(Long id);
+public interface GroupRoleTunnelI extends AbstractTunnelI<GroupRoleDO> {
 
     /**
     * delete object by id
@@ -32,18 +26,10 @@ public interface GroupRoleTunnelI{
     int delete(Long id);
 
     /**
-    * create
-    *
-    * @param record
-    * @return
-    */
-    int create(GroupRoleDO record);
-
-    /**
-    * update
-    *
-    * @param record
-    * @return
-    */
-    int update(GroupRoleDO record);
+     * 用户组对应的角色列表
+     *
+     * @param groupId
+     * @return
+     */
+    List<GroupRoleDO> listByGroupId(Long groupId);
 }

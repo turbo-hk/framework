@@ -3,7 +3,9 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
+import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserRoleDO;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -13,15 +15,7 @@ import org.apache.ibatis.annotations.Param;
  *
  * Created at 2020-03-26 16:21:17 by Storys.Zhang
  */
-public interface UserRoleDAO{
-
-    /**
-     * select object by id
-     *
-     * @param id
-     * @return
-     */
-    UserRoleDO get(@Param("id") Long id);
+public interface UserRoleDAO extends AbstractDAO<UserRoleDO> {
 
    /**
     * delete object by id
@@ -31,19 +25,11 @@ public interface UserRoleDAO{
     */
     int delete(@Param("id") Long id);
 
-   /**
-    * insert
-    *
-    * @param record
-    * @return
-    */
-    int insert(UserRoleDO record);
-
-   /**
-    * update
-    *
-    * @param record
-    * @return
-    */
-    int update(UserRoleDO record);
+    /**
+     * 用户关联的角色
+     *
+     * @param userId
+     * @return
+     */
+    List<UserRoleDO> listByUserId(Long userId);
 }

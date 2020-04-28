@@ -3,7 +3,9 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
+import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupRoleDO;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -13,15 +15,7 @@ import org.apache.ibatis.annotations.Param;
  *
  * Created at 2020-03-26 16:19:40 by Storys.Zhang
  */
-public interface GroupRoleDAO{
-
-    /**
-     * select object by id
-     *
-     * @param id
-     * @return
-     */
-    GroupRoleDO get(@Param("id") Long id);
+public interface GroupRoleDAO extends AbstractDAO<GroupRoleDO> {
 
    /**
     * delete object by id
@@ -31,19 +25,11 @@ public interface GroupRoleDAO{
     */
     int delete(@Param("id") Long id);
 
-   /**
-    * insert
-    *
-    * @param record
-    * @return
-    */
-    int insert(GroupRoleDO record);
-
-   /**
-    * update
-    *
-    * @param record
-    * @return
-    */
-    int update(GroupRoleDO record);
+    /**
+     * 用户组角色列表
+     *
+     * @param groupId
+     * @return
+     */
+    List<GroupRoleDO> listByGroupId(Long groupId);
 }

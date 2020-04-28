@@ -23,7 +23,4 @@ public class GroupRoleDO extends AbstractDO {
     /**  */
     private Long roleId;
 
-    /** 租户ID */
-    private Long tenantId;
-
 }

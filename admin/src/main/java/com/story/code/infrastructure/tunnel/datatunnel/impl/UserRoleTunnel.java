@@ -3,12 +3,12 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel.impl;
 
+import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserRoleDO;
 import com.story.code.infrastructure.tunnel.datatunnel.UserRoleTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.UserRoleDAO;
+import java.util.List;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
 *
@@ -18,15 +18,7 @@ import javax.annotation.Resource;
 * Created at 2020-03-26 16:21:17 by Storys.Zhang
 */
 @Component
-public class UserRoleTunnel implements UserRoleTunnelI{
-
-    @Resource
-    private UserRoleDAO dao;
-
-    @Override
-    public UserRoleDO get(Long id){
-        return dao.get(id);
-    }
+public class UserRoleTunnel extends AbstractTunnel<UserRoleDO, UserRoleDAO> implements UserRoleTunnelI{
 
     @Override
     public int delete(Long id){
@@ -34,13 +26,8 @@ public class UserRoleTunnel implements UserRoleTunnelI{
     }
 
     @Override
-    public int create(UserRoleDO record){
-        return dao.insert(record);
-    }
-
-    @Override
-    public int update(UserRoleDO record){
-        return dao.update(record);
+    public List<UserRoleDO> listByUserId(Long userId) {
+        return dao.listByUserId(userId);
     }
 
 }

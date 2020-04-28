@@ -21,14 +21,7 @@ public class UserRoleDO extends AbstractDO {
     private Long roleId;
 
     /**
-     * 租户ID
-     */
-    private Long tenantId;
-
-    /**
      *
      */
     private Long userId;
-
-
 }
