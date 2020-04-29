@@ -32,7 +32,6 @@ public class MenuController {
     @PostMapping("/page")
     public Mono<ApiResponseVO<PageVO<MenuPageListVO>>> page(@RequestBody MenuPageListQuery query) {
         //Mono<Long> userId = SecurityUtils.getUserId();
-
         return SecurityUtils.getUserId().map(f -> service.page(query)).doOnSuccess(c -> {
             System.out.println("----" + c);
         });

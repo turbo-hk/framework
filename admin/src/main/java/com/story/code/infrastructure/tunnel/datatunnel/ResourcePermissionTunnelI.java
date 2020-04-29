@@ -1,49 +1,34 @@
 /**
-* Copyright (c) 2019, Credan(上海)-版权所有
-*/
+ * Copyright (c) 2019, Credan(上海)-版权所有
+ */
 package com.story.code.infrastructure.tunnel.datatunnel;
 
+import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.ResourcePermissionDO;
+import java.util.List;
 
 
 /**
-*
-*
-* @author storys.zhang@gmail.com
-*
-* Created at 2020-03-26 16:20:14 by Storys.Zhang
-*/
-public interface ResourcePermissionTunnelI{
+ * @author storys.zhang@gmail.com
+ * <p>
+ * Created at 2020-03-26 16:20:14 by Storys.Zhang
+ */
+public interface ResourcePermissionTunnelI extends AbstractTunnelI<ResourcePermissionDO> {
 
     /**
-    * select object by id
-    *
-    * @param id
-    * @return
-    */
-    ResourcePermissionDO get(Long id);
-
-    /**
-    * delete object by id
-    *
-    * @param id
-    * @return
-    */
+     * delete object by id
+     *
+     * @param id
+     * @return
+     */
     int delete(Long id);
 
     /**
-    * create
-    *
-    * @param record
-    * @return
-    */
-    int create(ResourcePermissionDO record);
+     * 根据id集合查询多个对象
+     *
+     * @param ids
+     * @return
+     */
+    List<ResourcePermissionDO> listByIds(List<Long> ids);
 
-    /**
-    * update
-    *
-    * @param record
-    * @return
-    */
-    int update(ResourcePermissionDO record);
 }

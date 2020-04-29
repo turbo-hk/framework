@@ -3,12 +3,13 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel.impl;
 
+import com.story.code.helper.CollectionHelper;
+import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.ResourcePermissionDO;
 import com.story.code.infrastructure.tunnel.datatunnel.ResourcePermissionTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.ResourcePermissionDAO;
+import java.util.List;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
 *
@@ -18,15 +19,7 @@ import javax.annotation.Resource;
 * Created at 2020-03-26 16:20:14 by Storys.Zhang
 */
 @Component
-public class ResourcePermissionTunnel implements ResourcePermissionTunnelI{
-
-    @Resource
-    private ResourcePermissionDAO dao;
-
-    @Override
-    public ResourcePermissionDO get(Long id){
-        return dao.get(id);
-    }
+public class ResourcePermissionTunnel extends AbstractTunnel<ResourcePermissionDO, ResourcePermissionDAO> implements ResourcePermissionTunnelI{
 
     @Override
     public int delete(Long id){
@@ -34,13 +27,11 @@ public class ResourcePermissionTunnel implements ResourcePermissionTunnelI{
     }
 
     @Override
-    public int create(ResourcePermissionDO record){
-        return dao.insert(record);
-    }
-
-    @Override
-    public int update(ResourcePermissionDO record){
-        return dao.update(record);
+    public List<ResourcePermissionDO> listByIds(List<Long> ids) {
+        if (CollectionHelper.isEmpty(ids)){
+            return CollectionHelper.EMPTY;
+        }
+        return dao.listByIds(ids);
     }
 
 }

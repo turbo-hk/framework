@@ -5,6 +5,7 @@ package com.story.code.infrastructure.tunnel.dataobject.sys;
 
 import com.story.code.infrastructure.tunnel.AbstractDO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -15,6 +16,7 @@ import lombok.Data;
 * Created at 2020-03-26 16:19:52 by Storys.Zhang
 */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class OrganizationDO  extends AbstractDO {
 
     /** 层级 */

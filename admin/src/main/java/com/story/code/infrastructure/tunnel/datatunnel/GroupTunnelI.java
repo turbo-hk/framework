@@ -3,7 +3,9 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel;
 
+import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO;
+import java.util.List;
 
 
 /**
@@ -13,15 +15,7 @@ import com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO;
 *
 * Created at 2020-03-26 16:19:00 by Storys.Zhang
 */
-public interface GroupTunnelI{
-
-    /**
-    * select object by id
-    *
-    * @param id
-    * @return
-    */
-    GroupDO get(Long id);
+public interface GroupTunnelI extends AbstractTunnelI<GroupDO> {
 
     /**
     * delete object by id
@@ -32,18 +26,10 @@ public interface GroupTunnelI{
     int delete(Long id);
 
     /**
-    * create
-    *
-    * @param record
-    * @return
-    */
-    int create(GroupDO record);
-
-    /**
-    * update
-    *
-    * @param record
-    * @return
-    */
-    int update(GroupDO record);
+     * 查询一个组下面所有的子组
+     *
+     * @param parentId
+     * @return
+     */
+    List<GroupDO> listChildren(Long parentId);
 }

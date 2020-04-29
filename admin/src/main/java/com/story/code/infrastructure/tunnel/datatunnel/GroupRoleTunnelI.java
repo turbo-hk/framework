@@ -28,8 +28,8 @@ public interface GroupRoleTunnelI extends AbstractTunnelI<GroupRoleDO> {
     /**
      * 用户组对应的角色列表
      *
-     * @param groupId
+     * @param groupIds
      * @return
      */
-    List<GroupRoleDO> listByGroupId(Long groupId);
+    List<GroupRoleDO> listByGroupIds(List<Long> groupIds);
 }

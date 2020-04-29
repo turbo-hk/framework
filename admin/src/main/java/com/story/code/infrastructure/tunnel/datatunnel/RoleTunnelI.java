@@ -32,4 +32,12 @@ public interface RoleTunnelI extends AbstractTunnelI<RoleDO> {
      * @return
      */
     List<RoleDO> listByIds(List<Long> ids);
+
+    /**
+     * 所有的子角色列表
+     *
+     * @param parentId
+     * @return
+     */
+    List<RoleDO> listChildren(Long parentId);
 }

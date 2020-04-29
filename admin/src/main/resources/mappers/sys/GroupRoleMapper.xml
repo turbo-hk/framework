@@ -77,8 +77,12 @@
         where id =  #{id, jdbcType=BIGINT}
     </update>
 
-    <select id="listByGroupId" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" />  from sys_group_role where group_id = #{groupId, jdbcType=BIGINT} and del_flag = 0
+    <select id="listByGroupIds" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />  from sys_group_role where group_id
+        <foreach collection="groupIds" open=" in (" separator="," close=")" item="groupId">
+            #{groupId}
+        </foreach>
+        and del_flag = 0
     </select>
 
 </mapper>

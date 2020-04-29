@@ -113,6 +113,15 @@
         <include refid="Base_Column_List"/>
         from sys_resource_menu where del_flag = 0
     </select>
+    <select id="listByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource_menu where id
+        <foreach collection="ids" item="id" open=" in (" separator="," close=")">
+            #{id}
+        </foreach>
+        AND del_flag = 0
+    </select>
 
 </mapper>
 

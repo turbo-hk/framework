@@ -2,9 +2,11 @@ package com.story.code.domain.sys.repository;
 
 import com.story.code.domain.sys.converter.RoleConverter;
 import com.story.code.domain.sys.valueobject.RoleVO;
+import com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupRoleDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserRoleDO;
 import com.story.code.infrastructure.tunnel.datatunnel.GroupRoleTunnelI;
+import com.story.code.infrastructure.tunnel.datatunnel.GroupTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.RoleTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.UserRoleTunnelI;
 import java.util.List;
@@ -28,14 +30,25 @@ public class UserRoleRepository {
     private RoleConverter roleConverter;
     @Autowired
     private GroupRoleTunnelI groupRoleTunnel;
+    @Autowired
+    private GroupTunnelI groupTunnel;
 
-    public List<RoleVO> customRoles(Long userId){
+    /**
+     * 用户角色列表包含角色子集
+     *
+     * @param userId
+     * @return
+     */
+    public List<RoleVO> customRoles(Long userId) {
         List<Long> roleIds = userRoleTunnel.listByUserId(userId).stream().map(UserRoleDO::getRoleId).collect(Collectors.toList());
-        return roleTunnel.listByIds(roleIds).stream().map(roleConverter::doToVo).collect(Collectors.toList());
+        return roleTunnel.listByIds(roleIds).stream().map(roleDO -> roleTunnel.listChildren(roleDO.getId())).flatMap(List::stream).map(roleConverter::doToVo)
+            .collect(Collectors.toList());
     }
 
     public List<RoleVO> userGroupRoles(Long groupId) {
-        List<Long> roleIds =  groupRoleTunnel.listByGroupId(groupId).stream().map(GroupRoleDO::getRoleId).collect(Collectors.toList());
-        return roleTunnel.listByIds(roleIds).stream().map(roleConverter::doToVo).collect(Collectors.toList());
+        List<Long> childrenGroupList = groupTunnel.listChildren(groupId).stream().map(GroupDO::getId).collect(Collectors.toList());
+        List<Long> roleIds = groupRoleTunnel.listByGroupIds(childrenGroupList).stream().map(GroupRoleDO::getRoleId).collect(Collectors.toList());
+        return roleTunnel.listByIds(roleIds).stream().map(roleDO -> roleTunnel.listChildren(roleDO.getId())).flatMap(List::stream).map(roleConverter::doToVo)
+            .collect(Collectors.toList());
     }
 }

@@ -38,4 +38,12 @@ public interface ResourceMenuDAO extends AbstractDAO<ResourceMenuDO> {
      * @return
      */
     List<ResourceMenuDO> listAll();
+
+    /**
+     * 查询多个对象
+     *
+     * @param ids
+     * @return
+     */
+    List<ResourceMenuDO> listByIds(@Param("ids") List<Long> ids);
 }

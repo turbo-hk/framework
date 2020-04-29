@@ -28,8 +28,8 @@ public interface GroupRoleDAO extends AbstractDAO<GroupRoleDO> {
     /**
      * 用户组角色列表
      *
-     * @param groupId
+     * @param groupIds
      * @return
      */
-    List<GroupRoleDO> listByGroupId(Long groupId);
+    List<GroupRoleDO> listByGroupIds(@Param("groupIds") List<Long> groupIds);
 }

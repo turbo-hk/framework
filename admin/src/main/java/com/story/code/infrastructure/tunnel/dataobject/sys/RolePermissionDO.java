@@ -5,6 +5,7 @@ package com.story.code.infrastructure.tunnel.dataobject.sys;
 
 import com.story.code.infrastructure.tunnel.AbstractDO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
@@ -13,6 +14,7 @@ import lombok.Data;
  * Created at 2020-03-26 16:20:29 by Storys.Zhang
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class RolePermissionDO extends AbstractDO {
 
     /**
@@ -24,10 +26,5 @@ public class RolePermissionDO extends AbstractDO {
      *
      */
     private Long roleId;
-
-    /**
-     * 租户ID
-     */
-    private Long tenantId;
 
 }

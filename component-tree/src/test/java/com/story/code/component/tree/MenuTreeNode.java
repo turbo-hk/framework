@@ -24,7 +24,6 @@ public class MenuTreeNode extends AbstractTreeNode<Long, MenuTreeNode> {
      */
     private String remarks;
 
-
     public String getLinkUrl() {
         return linkUrl;
     }
@@ -47,14 +46,5 @@ public class MenuTreeNode extends AbstractTreeNode<Long, MenuTreeNode> {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
-    }
-
-    @Override
-    public String toString() {
-        return "MenuTreeNode{" +
-            "linkUrl='" + linkUrl + '\'' +
-            ", icon='" + icon + '\'' +
-            ", remarks='" + remarks + '\'' +
-            "} " + super.toString();
     }
 }

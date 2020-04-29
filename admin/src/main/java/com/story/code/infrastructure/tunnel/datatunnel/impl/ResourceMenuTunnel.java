@@ -3,6 +3,7 @@
  */
 package com.story.code.infrastructure.tunnel.datatunnel.impl;
 
+import com.story.code.helper.CollectionHelper;
 import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.ResourceMenuDO;
 import com.story.code.infrastructure.tunnel.datatunnel.ResourceMenuTunnelI;
@@ -27,6 +28,14 @@ public class ResourceMenuTunnel extends AbstractTunnel<ResourceMenuDO, ResourceM
     @Override
     public List<ResourceMenuDO> pageList(MenuPageListQuery query) {
         return dao.pageList(query);
+    }
+
+    @Override
+    public List<ResourceMenuDO> listByIds(List<Long> ids) {
+        if (CollectionHelper.isEmpty(ids)){
+            return CollectionHelper.EMPTY;
+        }
+        return dao.listByIds(ids);
     }
 
 }

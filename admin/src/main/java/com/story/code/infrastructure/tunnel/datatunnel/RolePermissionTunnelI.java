@@ -3,7 +3,9 @@
 */
 package com.story.code.infrastructure.tunnel.datatunnel;
 
+import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.RolePermissionDO;
+import java.util.List;
 
 
 /**
@@ -13,15 +15,7 @@ import com.story.code.infrastructure.tunnel.dataobject.sys.RolePermissionDO;
 *
 * Created at 2020-03-26 16:20:29 by Storys.Zhang
 */
-public interface RolePermissionTunnelI{
-
-    /**
-    * select object by id
-    *
-    * @param id
-    * @return
-    */
-    RolePermissionDO get(Long id);
+public interface RolePermissionTunnelI extends AbstractTunnelI<RolePermissionDO> {
 
     /**
     * delete object by id
@@ -32,18 +26,11 @@ public interface RolePermissionTunnelI{
     int delete(Long id);
 
     /**
-    * create
-    *
-    * @param record
-    * @return
-    */
-    int create(RolePermissionDO record);
+     * 查询角色权限
+     *
+     * @param roleIds
+     * @return
+     */
+    List<RolePermissionDO> listByRoleIds(List<Long> roleIds);
 
-    /**
-    * update
-    *
-    * @param record
-    * @return
-    */
-    int update(RolePermissionDO record);
 }

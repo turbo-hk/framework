@@ -94,6 +94,10 @@
         </foreach>
     </select>
 
+    <select id="listByParentId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from sys_role where parent_id = #{parentId, jdbcType=BIGINT} and del_flag = 0
+    </select>
+
 </mapper>
 
 
