@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum InternalErrorCodeEnum {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,"50000", "INTERNAL SERVER ERROR"),
+    INTERNAL_DATA_PERSIST_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,"50001", "数据持久化异常"),
     LOGIN_REQUIRED(HttpStatus.FORBIDDEN, "40301", "token失效");
 
     private final HttpStatus httpStatus;

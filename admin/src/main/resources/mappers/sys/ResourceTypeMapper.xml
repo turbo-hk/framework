@@ -83,10 +83,12 @@
     </update>
 
     <select id="listByTenantId" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" /> from sys_resource_type where  tenant_id = #{tenantId, jdbcType=BIGINT} and del_flag = 0
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resource_type where tenant_id = #{tenantId, jdbcType=BIGINT} and del_flag = 0
     </select>
 
-/mapper>
+</mapper>
 
 
 

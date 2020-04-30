@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * Created at 2020/4/8 by Storys.Zhang
  */
 @Component
-public class MenuConverter {
+public class MenuAppConverter {
 
     public MenuPageListQuery toParam(com.story.code.app.sys.query.MenuPageListQuery query) {
         MenuPageListQuery param = new MenuPageListQuery();

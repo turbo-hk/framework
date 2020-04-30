@@ -1,5 +1,6 @@
 package com.story.code.boot.security;
 
+import com.story.code.domain.sys.valueobject.RoleVO;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -75,10 +76,4 @@ public class AuthenticationUser implements UserDetails {
         return true;
     }
 
-    @Data
-    public class RoleVO {
-
-        private String name;
-
-    }
 }

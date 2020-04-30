@@ -7,7 +7,9 @@
         <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
         <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
         <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
-        <result column="level" jdbcType="INTEGER" property="level"/>
+        <result column="parent_id" jdbcType="INTEGER" property="parentId"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="parent_uid" jdbcType="VARCHAR" property="parentUid"/>
         <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
@@ -21,7 +23,9 @@
         gmt_create,
         gmt_modified,
         id,
-        level,
+        parent_id,
+        uid,
+        parent_uid,
         modified_by,
         name,
         remarks,
@@ -47,7 +51,9 @@
             del_flag,
             gmt_create,
             gmt_modified,
-            level,
+            parent_id,
+            uid,
+            parent_uid,
             modified_by,
             name,
             remarks,
@@ -58,7 +64,9 @@
             #{delFlag, jdbcType=TINYINT},
             #{gmtCreate, jdbcType=TIMESTAMP},
             #{gmtModified, jdbcType=TIMESTAMP},
-            #{level, jdbcType=INTEGER},
+            #{parentId, jdbcType=INTEGER},
+            #{uid, jdbcType=VARCHAR},
+            #{parentUid, jdbcType=VARCHAR},
             #{modifiedBy, jdbcType=VARCHAR},
             #{name, jdbcType=VARCHAR},
             #{remarks, jdbcType=VARCHAR},
@@ -73,7 +81,9 @@
             del_flag = #{delFlag, jdbcType=TINYINT},
             gmt_create = #{gmtCreate, jdbcType=TIMESTAMP},
             gmt_modified = #{gmtModified, jdbcType=TIMESTAMP},
-            level = #{level, jdbcType=INTEGER},
+            parent_id = #{parentId, jdbcType=INTEGER},
+            uid = #{uid, jdbcType=VARCHAR},
+            parent_uid = #{parentUid, jdbcType=VARCHAR},
             modified_by = #{modifiedBy, jdbcType=VARCHAR},
             name = #{name, jdbcType=VARCHAR},
             remarks = #{remarks, jdbcType=VARCHAR},
@@ -81,6 +91,11 @@
             version = #{version, jdbcType=BIGINT}
         where id =  #{id, jdbcType=BIGINT}
     </update>
+
+    <select id="maxByParentId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" /> from sys_organization where parent_id = #{parentId, jdbcType=INTEGER}
+        and del_flag = 0 order by id desc limit 1
+    </select>
 
 </mapper>
 

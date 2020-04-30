@@ -1,10 +1,13 @@
 package com.story.code.boot.security;
 
-import com.google.common.collect.Lists;
+import com.story.code.domain.sys.factory.UserAuthorityFactory;
+import com.story.code.domain.sys.valueobject.RoleVO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import com.story.code.infrastructure.tunnel.datatunnel.UserTunnelI;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
@@ -22,6 +25,8 @@ public class DatabaseReactiveUserDetailService implements ReactiveUserDetailsSer
 
     @Autowired
     private UserTunnelI userTunnel;
+    @Autowired
+    private UserAuthorityFactory userAuthorityFactory;
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
@@ -30,26 +35,17 @@ public class DatabaseReactiveUserDetailService implements ReactiveUserDetailsSer
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("用户名不存在: " + username);
         }
-        AuthenticationUser userDetail = new AuthenticationUser(user.getId(), user.getLoginName(), user.getPassword(), Lists.newArrayList());
+        AuthenticationUser userDetail = new AuthenticationUser(user.getId(), user.getLoginName(), user.getPassword(), getRoles(user));
         userDetail.setTenantId(user.getTenantId());
         userDetail.setSalt(user.getSalt());
         return Mono
             .just(userDetail);
     }
 
-    public Mono<UserDetails> findByUserId(Long userId){
-        UserDO user = userTunnel.get(userId);
-        AuthenticationUser userDetail = new AuthenticationUser(user.getId(), user.getLoginName(), user.getPassword(), Lists.newArrayList());
-        userDetail.setTenantId(user.getTenantId());
-        userDetail.setSalt(user.getSalt());
-        return Mono
-            .just(userDetail);
-    }
-
-    private String[] getRoleNames(UserDO user) {
-        List<String> roleNames = Lists.newArrayList();
-        //todo 用户角色
-        String[] strings = new String[roleNames.size()];
-        return roleNames.toArray(strings);
+    private List<RoleVO> getRoles(UserDO user) {
+        List<RoleVO> fullRoleList = userAuthorityFactory.userAuthorityAggregation(user.getId()).getFullRoleList();
+        Set<String> roleNames = fullRoleList.stream().map(RoleVO::getName).collect(Collectors.toSet());
+        log.info("{}, 拥有的角色: {}", user.getLoginName(), roleNames);
+        return fullRoleList;
     }
 }

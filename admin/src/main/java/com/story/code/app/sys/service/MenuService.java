@@ -3,7 +3,7 @@ package com.story.code.app.sys.service;
 import static com.story.code.common.ApiResponseVO.defaultSuccessful;
 
 import com.story.code.app.sys.command.MenuPersistCommand;
-import com.story.code.app.sys.converter.MenuConverter;
+import com.story.code.app.sys.converter.MenuAppConverter;
 import com.story.code.app.sys.query.MenuPageListQuery;
 import com.story.code.app.sys.vo.MenuPageListVO;
 import com.story.code.common.ApiResponseVO;
@@ -26,7 +26,7 @@ public class MenuService {
     @Autowired
     private ResourceMenuTunnelI resourceMenuTunnel;
     @Autowired
-    private MenuConverter menuConverter;
+    private MenuAppConverter menuConverter;
 
     public ApiResponseVO<PageVO<MenuPageListVO>> page(MenuPageListQuery query) {
         PageWrapper<ResourceMenuDO, MenuPageListVO, MenuPageListQuery> pageWrapper = query1 -> resourceMenuTunnel.pageList(menuConverter.toParam(query1));
