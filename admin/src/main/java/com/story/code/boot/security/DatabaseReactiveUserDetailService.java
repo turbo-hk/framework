@@ -44,7 +44,7 @@ public class DatabaseReactiveUserDetailService implements ReactiveUserDetailsSer
 
     private List<RoleVO> getRoles(UserDO user) {
         List<RoleVO> fullRoleList = userAuthorityFactory.userAuthorityAggregation(user.getId()).getFullRoleList();
-        Set<String> roleNames = fullRoleList.stream().map(RoleVO::getName).collect(Collectors.toSet());
+        Set<String> roleNames = fullRoleList.stream().map(RoleVO::getCode).collect(Collectors.toSet());
         log.info("{}, 拥有的角色: {}", user.getLoginName(), roleNames);
         return fullRoleList;
     }

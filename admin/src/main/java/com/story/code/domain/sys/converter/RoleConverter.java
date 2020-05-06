@@ -16,6 +16,7 @@ public class RoleConverter {
         RoleVO vo = new RoleVO();
         vo.setId(data.getId());
         vo.setName(data.getName());
+        vo.setCode(data.getCode());
         return vo;
     }
 

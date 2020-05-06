@@ -12,6 +12,7 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
         <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
         <result column="version" jdbcType="BIGINT" property="version"/>
     </resultMap>
@@ -19,6 +20,7 @@
     <sql id="Base_Column_List">
                 create_by,
         data_scope,
+        code,
         del_flag,
         gmt_create,
         gmt_modified,
@@ -47,6 +49,7 @@
         INSERT INTO sys_role (
                     create_by,
             data_scope,
+            code,
             del_flag,
             gmt_create,
             gmt_modified,
@@ -59,6 +62,7 @@
         ) values(
                     #{createBy, jdbcType=VARCHAR},
             #{dataScope, jdbcType=INTEGER},
+            #{code,jdbcType=VARCHAR},
             #{delFlag, jdbcType=TINYINT},
             #{gmtCreate, jdbcType=TIMESTAMP},
             #{gmtModified, jdbcType=TIMESTAMP},
@@ -75,6 +79,7 @@
         UPDATE sys_role set
                     create_by = #{createBy, jdbcType=VARCHAR},
             data_scope = #{dataScope, jdbcType=INTEGER},
+            code = #{code,jdbcType=VARCHAR},
             del_flag = #{delFlag, jdbcType=TINYINT},
             gmt_create = #{gmtCreate, jdbcType=TIMESTAMP},
             gmt_modified = #{gmtModified, jdbcType=TIMESTAMP},

@@ -37,4 +37,9 @@ public class RoleDO extends AbstractDO {
      */
     private Long tenantId;
 
+    /**
+     * 角色代码， 不支持中文
+     */
+    private String code;
+
 }

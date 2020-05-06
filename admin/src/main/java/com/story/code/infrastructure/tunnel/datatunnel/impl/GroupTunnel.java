@@ -37,6 +37,7 @@ public class GroupTunnel extends AbstractTunnel<GroupDO, GroupDAO> implements Gr
 
     private void getChildren(List<GroupDO> children, List<GroupDO> flatList) {
         children.stream().forEach(groupDO -> {
+            flatList.add(groupDO);
             List<GroupDO> groupDOS = dao.listByParentId(groupDO.getId());
             if (groupDOS.size() == 0) {
                 return;

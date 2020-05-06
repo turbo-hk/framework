@@ -2,6 +2,7 @@ package com.story.code.domain.sys.repository;
 
 import com.story.code.domain.sys.converter.RoleConverter;
 import com.story.code.domain.sys.valueobject.RoleVO;
+import com.story.code.helper.CollectionHelper;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupRoleDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserRoleDO;
@@ -41,14 +42,19 @@ public class UserRoleRepository {
      */
     public List<RoleVO> customRoles(Long userId) {
         List<Long> roleIds = userRoleTunnel.listByUserId(userId).stream().map(UserRoleDO::getRoleId).collect(Collectors.toList());
-        return roleTunnel.listByIds(roleIds).stream().map(roleDO -> roleTunnel.listChildren(roleDO.getId())).flatMap(List::stream).map(roleConverter::doToVo)
-            .collect(Collectors.toList());
+        return buildRole(roleIds);
     }
 
     public List<RoleVO> userGroupRoles(Long groupId) {
         List<Long> childrenGroupList = groupTunnel.listChildren(groupId).stream().map(GroupDO::getId).collect(Collectors.toList());
+        childrenGroupList.add(groupId);
         List<Long> roleIds = groupRoleTunnel.listByGroupIds(childrenGroupList).stream().map(GroupRoleDO::getRoleId).collect(Collectors.toList());
-        return roleTunnel.listByIds(roleIds).stream().map(roleDO -> roleTunnel.listChildren(roleDO.getId())).flatMap(List::stream).map(roleConverter::doToVo)
+        return buildRole(roleIds);
+    }
+
+    private List<RoleVO> buildRole(List<Long> roleIds) {
+        return roleTunnel.listByIds(roleIds).stream().map(roleDO -> CollectionHelper.add(roleTunnel.listChildren(roleDO.getId()), roleDO)).flatMap(List::stream)
+            .map(roleConverter::doToVo)
             .collect(Collectors.toList());
     }
 }
