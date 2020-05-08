@@ -5,6 +5,8 @@ package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
 import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
+import com.story.code.infrastructure.tunnel.param.sys.UserPageListParam;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -32,4 +34,12 @@ public interface UserDAO extends AbstractDAO<UserDO> {
      * @return
      */
     UserDO getByLoginName(@Param("loginName") String loginName, @Param("tenantId") Long tenantId);
+
+    /**
+     * 分页数据
+     *
+     * @param query
+     * @return
+     */
+    List<UserDO> page(UserPageListParam query);
 }

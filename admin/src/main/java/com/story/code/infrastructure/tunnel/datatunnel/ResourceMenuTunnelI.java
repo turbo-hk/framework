@@ -5,7 +5,7 @@ package com.story.code.infrastructure.tunnel.datatunnel;
 
 import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.ResourceMenuDO;
-import com.story.code.infrastructure.tunnel.query.sys.MenuPageListQuery;
+import com.story.code.infrastructure.tunnel.param.sys.MenuPageListParam;
 import java.util.List;
 import reactor.core.publisher.Mono;
 
@@ -31,7 +31,7 @@ public interface ResourceMenuTunnelI extends AbstractTunnelI<ResourceMenuDO> {
      * @param query
      * @return
      */
-    Mono<List<ResourceMenuDO>> pageList(MenuPageListQuery query);
+    Mono<List<ResourceMenuDO>> pageList(MenuPageListParam query);
 
     /**
      * 根据id集合查询多个对象

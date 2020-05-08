@@ -40,4 +40,9 @@ public class UserDO extends AbstractDataScopeDO {
     /** 租户ID */
     private Long tenantId;
 
+    /**
+     * 1：禁用、0：启用
+     */
+    private Boolean disabled;
+
 }

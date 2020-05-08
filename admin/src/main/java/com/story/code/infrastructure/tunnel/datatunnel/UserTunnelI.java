@@ -5,6 +5,9 @@ package com.story.code.infrastructure.tunnel.datatunnel;
 
 import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
+import com.story.code.infrastructure.tunnel.param.sys.UserPageListParam;
+import java.util.List;
+import reactor.core.publisher.Mono;
 
 
 /**
@@ -30,5 +33,13 @@ public interface UserTunnelI extends AbstractTunnelI<UserDO> {
      * @return
      */
     UserDO getByLoginName(String loginName, Long tenantId);
+
+    /**
+     * 分页数据
+     *
+     * @param query
+     * @return
+     */
+    Mono<List<UserDO>> page(UserPageListParam query);
 
 }

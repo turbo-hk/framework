@@ -1,6 +1,6 @@
-package com.story.code.infrastructure.tunnel.query.sys;
+package com.story.code.infrastructure.tunnel.param.sys;
 
-import com.story.code.infrastructure.tunnel.AbstractQuery;
+import com.story.code.infrastructure.tunnel.AbstractParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class MenuPageListQuery extends AbstractQuery {
+public class MenuPageListParam extends AbstractParam {
 
     private Long parentId;
 }

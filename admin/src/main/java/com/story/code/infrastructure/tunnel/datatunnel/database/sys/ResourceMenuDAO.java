@@ -5,7 +5,7 @@ package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
 import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.ResourceMenuDO;
-import com.story.code.infrastructure.tunnel.query.sys.MenuPageListQuery;
+import com.story.code.infrastructure.tunnel.param.sys.MenuPageListParam;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,7 +30,7 @@ public interface ResourceMenuDAO extends AbstractDAO<ResourceMenuDO> {
      * @param query
      * @return
      */
-    List<ResourceMenuDO> pageList(MenuPageListQuery query);
+    List<ResourceMenuDO> pageList(MenuPageListParam query);
 
     /**
      * 查询所有菜单

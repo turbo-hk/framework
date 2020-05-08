@@ -12,7 +12,7 @@ import lombok.Data;
  * Created at 2020/4/8 by Storys.Zhang
  */
 @Data
-public abstract class AbstractQuery {
+public abstract class AbstractParam {
 
     private Integer DEL_FLAG = DEL_FLAG_FALSE;
 

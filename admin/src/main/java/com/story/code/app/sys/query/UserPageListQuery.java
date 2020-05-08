@@ -1,5 +1,6 @@
 package com.story.code.app.sys.query;
 
+import com.story.code.component.page.query.PageQuery;
 import lombok.Data;
 
 /**
@@ -9,5 +10,11 @@ import lombok.Data;
  */
 @Data
 public class UserPageListQuery {
+
+    private PageQuery page;
+
+    private String userName;
+
+    private Integer disabled;
 
 }

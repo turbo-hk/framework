@@ -6,6 +6,7 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import com.story.code.app.sys.handler.LoginHandler;
 import com.story.code.app.sys.handler.MenuHandler;
 import com.story.code.app.sys.handler.OrganizationHandler;
+import com.story.code.app.sys.handler.UserHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -35,6 +36,11 @@ public class SysRoutersConfiguration {
     public RouterFunction<ServerResponse> menuRoutersFunction(MenuHandler handler) {
         return RouterFunctions.route(RequestPredicates.POST("/sys/menu/page").and(accept(APPLICATION_JSON)), handler::page)
             .and(RouterFunctions.route(RequestPredicates.POST("/sys/menu/add").and(accept(APPLICATION_JSON)), handler::add));
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> userRoutersFunction(UserHandler handler) {
+        return RouterFunctions.route(RequestPredicates.POST("/sys/user/page").and(accept(APPLICATION_JSON)), handler::page);
     }
 
 }
