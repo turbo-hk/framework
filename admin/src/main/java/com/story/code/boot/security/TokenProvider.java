@@ -37,7 +37,7 @@ public class TokenProvider {
 
 
     private String RSA_SEED = "handongzhengfawei";
-    private long expireSeconds = 180;
+    private long expireSeconds = 1800;
     private String redisPrefix = "login:token:";
 
     @PostConstruct
@@ -78,6 +78,14 @@ public class TokenProvider {
         log.debug("解密后Token: {}", decryptToken);
         List<String> splitToList = Splitter.on("^").splitToList(decryptToken);
         return Long.valueOf(splitToList.get(1));
+    }
+
+    @SneakyThrows
+    public String getUserName(String token) {
+        String decryptToken = RsaHelper.decrypt(rsaKeyPair.getPublicKey(), token);
+        log.debug("解密后Token: {}", decryptToken);
+        List<String> splitToList = Splitter.on("^").splitToList(decryptToken);
+        return splitToList.get(2);
     }
 
     public Mono<Boolean> validateToken(String authToken) {

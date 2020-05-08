@@ -8,6 +8,7 @@ import com.story.code.infrastructure.tunnel.dataobject.sys.OrganizationDO;
 import com.story.code.infrastructure.tunnel.datatunnel.OrganizationTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.OrganizationDAO;
 import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
 
 /**
  * @author storys.zhang@gmail.com
@@ -23,8 +24,8 @@ public class OrganizationTunnel extends AbstractTunnel<OrganizationDO, Organizat
     }
 
     @Override
-    public OrganizationDO maxByParentId(Long parentId) {
-        return dao.maxByParentId(parentId);
+    public Mono<OrganizationDO> maxByParentId(Long parentId) {
+        return Mono.justOrEmpty(dao.maxByParentId(parentId));
     }
 
 }

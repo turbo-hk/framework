@@ -28,11 +28,25 @@ public interface PageWrapper<D, V, Q> {
      *
      * @param query
      * @param pageQuery
+     * @param converter
      * @return
      */
     default PageVO page(Q query, PageQuery pageQuery, PageDataConverter<D, V> converter) {
+        return page(this.dataList(query), pageQuery, converter);
+    }
+
+    /**
+     * 分页
+     *
+     * @param dataList
+     * @param pageQuery
+     * @param converter
+     * @param <D>
+     * @param <V>
+     * @return
+     */
+    static <D, V> PageVO page(List<D> dataList, PageQuery pageQuery, PageDataConverter<D, V> converter) {
         PageHelper.startPage(pageQuery.getCurrent(), pageQuery.getPageSize());
-        List<D> dataList = this.dataList(query);
         PageInfo<D> pageInfo = new PageInfo<>(dataList);
         List<V> list = pageInfo.getList().stream().map(f -> converter.convert(f)).collect(Collectors.toList());
         PageVO pageVO = new PageVO();

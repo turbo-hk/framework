@@ -3,7 +3,7 @@
 */
 package com.story.code.infrastructure.tunnel.dataobject.sys;
 
-import com.story.code.infrastructure.tunnel.AbstractDO;
+import com.story.code.infrastructure.tunnel.AbstractDataScopeDO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserDO extends AbstractDO {
+public class UserDO extends AbstractDataScopeDO {
 
     /**  */
     private String loginName;
@@ -39,6 +39,5 @@ public class UserDO extends AbstractDO {
 
     /** 租户ID */
     private Long tenantId;
-
 
 }

@@ -36,5 +36,12 @@ public class SecurityUtils {
             .map(token -> SpringContextHolder.getBean(TokenProvider.class).getUserId(token));
 
     }
+    public static Mono<String> getUserName() {
+        return ReactiveRequestContextHolder.getRequest().map(request -> request.getHeaders().getFirst("Authorization"))
+            .filter(Objects::nonNull)
+            .map(token -> TokenAuthenticationConverter.formatToken(token))
+            .map(token -> SpringContextHolder.getBean(TokenProvider.class).getUserName(token));
+
+    }
 
 }

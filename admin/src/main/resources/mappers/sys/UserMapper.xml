@@ -3,20 +3,22 @@
 <mapper namespace="com.story.code.infrastructure.tunnel.datatunnel.database.sys.UserDAO">
     <resultMap id="BaseResultMap" type="com.story.code.infrastructure.tunnel.dataobject.sys.UserDO">
         <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
-        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
-        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
-        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
         <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
-        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
-        <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
-        <result column="organization_id" jdbcType="BIGINT" property="organizationId"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
         <result column="salt" jdbcType="VARCHAR" property="salt"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="tel" jdbcType="VARCHAR" property="tel"/>
+        <result column="organization_id" jdbcType="BIGINT" property="organizationId"/>
+        <result column="data_scope_organization_uid" jdbcType="VARCHAR" property="dataScopeOrganizationUid"/>
+        <result column="data_scope_user_id" jdbcType="BIGINT" property="dataScopeUserId"/>
         <result column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
         <result column="version" jdbcType="BIGINT" property="version"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="modified_by" jdbcType="VARCHAR" property="modifiedBy"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -34,7 +36,9 @@
         salt,
         tel,
         tenant_id,
-        version
+        version,
+        data_scope_organization_uid,
+        data_scope_user_id
     </sql>
 
     <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -64,7 +68,9 @@
             salt,
             tel,
             tenant_id,
-            version
+            version,
+            data_scope_organization_uid,
+            data_scope_user_id
         ) values(
                     #{createBy, jdbcType=VARCHAR},
             #{delFlag, jdbcType=TINYINT},
@@ -79,9 +85,32 @@
             #{salt, jdbcType=VARCHAR},
             #{tel, jdbcType=VARCHAR},
             #{tenantId, jdbcType=BIGINT},
-            #{version, jdbcType=BIGINT}
+            #{version, jdbcType=BIGINT},
+            #{dataScopeOrganizationUid,jdbcType=VARCHAR},
+            #{dataScopeUserId,jdbcType=BIGINT}
         )
     </insert>
+
+    <update id="update" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.UserDO">
+        UPDATE sys_user set
+            create_by = #{createBy, jdbcType=VARCHAR},
+            del_flag = #{delFlag, jdbcType=TINYINT},
+            gmt_create = #{gmtCreate, jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified, jdbcType=TIMESTAMP},
+            login_name = #{loginName, jdbcType=VARCHAR},
+            mobile = #{mobile, jdbcType=VARCHAR},
+            modified_by = #{modifiedBy, jdbcType=VARCHAR},
+            organization_id = #{organizationId, jdbcType=BIGINT},
+            password = #{password, jdbcType=VARCHAR},
+            remarks = #{remarks, jdbcType=VARCHAR},
+            salt = #{salt, jdbcType=VARCHAR},
+            tel = #{tel, jdbcType=VARCHAR},
+            tenant_id = #{tenantId, jdbcType=BIGINT},
+            version = #{version, jdbcType=BIGINT},
+            data_scope_organization_uid = #{dataScopeOrganizationUid,jdbcType=VARCHAR},
+            data_scope_user_id = #{dataScopeUserId,jdbcType=BIGINT}
+        where id =  #{id, jdbcType=BIGINT}
+    </update>
 
     <select id="getByLoginName" resultMap="BaseResultMap">
         select

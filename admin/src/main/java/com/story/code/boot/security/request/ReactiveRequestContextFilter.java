@@ -23,6 +23,7 @@ public class ReactiveRequestContextFilter implements WebFilter {
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         log.debug("绑定request");
+        System.out.println("currentThread = " + Thread.currentThread().getId());
         return chain.filter(exchange)
             .subscriberContext(ctx -> ctx.put(ReactiveRequestContextHolder.CONTEXT_KEY, request));
     }
