@@ -9,4 +9,5 @@ include 'component-helper'
 include 'admin'
 include 'component-page'
 include 'component-tree'
+include 'component-field-desc'
 

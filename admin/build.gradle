@@ -38,6 +38,7 @@ dependencies {
     compile project(':component-helper')
     compile project(':component-page')
     compile project(':component-tree')
+    compile project(':component-field-desc')
 }
 
 dependencyManagement {

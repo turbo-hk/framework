@@ -1,0 +1,10 @@
+archivesBaseName = "field-desc"
+dependencies {
+    compile(
+            libraries."guava",
+    )
+
+    testCompile(
+            libraries."junit"
+    )
+}

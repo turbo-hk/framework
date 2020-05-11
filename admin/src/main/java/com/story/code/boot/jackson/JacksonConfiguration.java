@@ -32,6 +32,7 @@ public class JacksonConfiguration {
         module.addSerializer(new PageResponseSerializer(PageVO.class));
         module.addDeserializer(PageQuery.class, new PageRequestDeserializer());
         objectMapper.registerModule(module);
+        objectMapper.setAnnotationIntrospector(new FieldDescSerializer());
         return objectMapper;
     }
 

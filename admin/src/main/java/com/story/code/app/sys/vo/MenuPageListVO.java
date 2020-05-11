@@ -1,5 +1,6 @@
 package com.story.code.app.sys.vo;
 
+import com.story.code.field.desc.FieldDescAnnotation;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
 @Data
 public class MenuPageListVO {
 
+    @FieldDescAnnotation(desc = "我是张三")
     private Long id;
 
     private Long parentId;

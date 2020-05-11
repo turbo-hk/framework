@@ -4,6 +4,7 @@ import com.story.code.app.sys.query.UserPageListQuery;
 import com.story.code.app.sys.vo.UserPageListVO;
 import com.story.code.common.converter.DataObjectToValueObject;
 import com.story.code.common.converter.RequestQueryToDatabaseParam;
+import com.story.code.common.enums.BooleanColumnEnum;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import com.story.code.infrastructure.tunnel.param.sys.UserPageListParam;
 import org.springframework.stereotype.Component;
@@ -19,11 +20,22 @@ public class UserAppConverter implements RequestQueryToDatabaseParam<UserPageLis
 
     @Override
     public UserPageListVO doToVo(UserDO data) {
-        return null;
+        UserPageListVO vo = new UserPageListVO();
+        vo.setLoginName(data.getLoginName());
+        vo.setMobile(data.getMobile());
+        vo.setOrganizationId(data.getOrganizationId());
+        vo.setOrganizationName(null);
+        vo.setTel(data.getTel());
+        vo.setTenantId(data.getTenantId());
+        vo.setDisabled(data.getDisabled());
+        return vo;
     }
 
     @Override
     public UserPageListParam toParam(UserPageListQuery query) {
-        return null;
+        UserPageListParam param = new UserPageListParam();
+        param.setUserName(query.getUserName());
+        param.setDisabled(BooleanColumnEnum.convert(query.getDisabled()).getBooleanValue());
+        return param;
     }
 }

@@ -10,4 +10,18 @@ import lombok.Data;
 @Data
 public class UserPageListVO {
 
+    private String loginName;
+
+    private String mobile;
+
+    private Long organizationId;
+
+    private String organizationName;
+
+    private String tel;
+
+    private Long tenantId;
+
+    private Boolean disabled;
+
 }
