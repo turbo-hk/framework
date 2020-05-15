@@ -1,6 +1,7 @@
 package com.story.code.common.enums;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import lombok.Getter;
 
@@ -34,6 +35,15 @@ public enum BooleanColumnEnum {
             return _TRUE;
         }
         return _FALSE;
+    }
 
+    public static int convert(Boolean bool) {
+        if (Objects.isNull(bool)) {
+            return _FALSE.getValue();
+        }
+        if (bool.booleanValue()) {
+            return _TRUE.getValue();
+        }
+        return _FALSE.getValue();
     }
 }

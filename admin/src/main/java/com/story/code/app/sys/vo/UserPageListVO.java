@@ -1,5 +1,6 @@
 package com.story.code.app.sys.vo;
 
+import com.story.code.common.DictVO;
 import lombok.Data;
 
 /**
@@ -22,6 +23,6 @@ public class UserPageListVO {
 
     private Long tenantId;
 
-    private Boolean disabled;
+    private DictVO<Integer> disabled;
 
 }

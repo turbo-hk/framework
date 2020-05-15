@@ -50,7 +50,7 @@ public class DictRepository {
         if (!dictNodeVOOptional.isPresent()) {
             return Optional.empty();
         }
-        return dictNodeVOOptional.get().getDictValueList().stream().filter(p -> p.getCode().equals(dictNodeCode)).findAny();
+        return dictNodeVOOptional.get().getDictValueList().stream().filter(p -> p.getCode().equals(dictValueCode)).findAny();
     }
 
 }

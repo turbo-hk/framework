@@ -2,11 +2,15 @@ package com.story.code.app.sys.converter;
 
 import com.story.code.app.sys.query.UserPageListQuery;
 import com.story.code.app.sys.vo.UserPageListVO;
+import com.story.code.common.DictVO;
 import com.story.code.common.converter.DataObjectToValueObject;
 import com.story.code.common.converter.RequestQueryToDatabaseParam;
 import com.story.code.common.enums.BooleanColumnEnum;
+import com.story.code.domain.dict.valueobject.DictNodeCodeEnum;
+import com.story.code.domain.dict.valueobject.DictValueVO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import com.story.code.infrastructure.tunnel.param.sys.UserPageListParam;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,7 +31,9 @@ public class UserAppConverter implements RequestQueryToDatabaseParam<UserPageLis
         vo.setOrganizationName(null);
         vo.setTel(data.getTel());
         vo.setTenantId(data.getTenantId());
-        vo.setDisabled(data.getDisabled());
+        int disabled = BooleanColumnEnum.convert(data.getDisabled());
+        Optional<DictValueVO> dictValue = DictNodeCodeEnum.DISABLED.ops().getDictValue(String.valueOf(disabled));
+        vo.setDisabled(new DictVO<Integer>(disabled, dictValue.get().getValue()));
         return vo;
     }
 
