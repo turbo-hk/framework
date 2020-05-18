@@ -129,7 +129,7 @@
         <include refid="Base_Column_List"/>
         from sys_user
         <where>
-            <if test="null != parentId">
+            <if test="null != userName">
                 AND login_name = #{userName, jdbcType=VARCHAR}
             </if>
             <if test="null !=tenantId">

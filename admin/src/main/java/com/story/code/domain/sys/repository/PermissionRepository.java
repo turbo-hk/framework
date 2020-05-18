@@ -38,7 +38,7 @@ public class PermissionRepository {
         List<Long> permissionIds = rolePermissionTunnel.listByRoleIds(roleIds).stream().map(RolePermissionDO::getPermissionId).collect(Collectors.toList());
 
         ResourceTypeDO resourceType = resourceTypeTunnel.listByTenantId(TenantIdUtil.getTenantId()).stream().filter(p -> p.getType().equals(ResourceTypeEnum.MENU.getType()))
-            .findAny().get();
+            .findAny().orElse(new ResourceTypeDO());
 
         List<Long> resourceIds = resourcePermissionTunnel.listByIds(permissionIds).parallelStream().filter(p -> p.getResourceTypeId().equals(resourceType.getId()))
             .map(ResourcePermissionDO::getResourceId).collect(

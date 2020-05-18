@@ -33,7 +33,7 @@ public class UserAppConverter implements RequestQueryToDatabaseParam<UserPageLis
         vo.setTenantId(data.getTenantId());
         int disabled = BooleanColumnEnum.convert(data.getDisabled());
         Optional<DictValueVO> dictValue = DictNodeCodeEnum.DISABLED.ops().getDictValue(String.valueOf(disabled));
-        vo.setDisabled(new DictVO<Integer>(disabled, dictValue.get().getValue()));
+        vo.setDisabled(new DictVO<Integer>(disabled, dictValue.orElse(new DictValueVO()).getValue()));
         return vo;
     }
 

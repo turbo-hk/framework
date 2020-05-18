@@ -35,6 +35,7 @@ public class SysRoutersConfiguration {
     @Bean
     public RouterFunction<ServerResponse> menuRoutersFunction(MenuHandler handler) {
         return RouterFunctions.route(RequestPredicates.POST("/sys/menu/page").and(accept(APPLICATION_JSON)), handler::page)
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/menu/authority").and(accept(APPLICATION_JSON)), handler::authority))
             .and(RouterFunctions.route(RequestPredicates.POST("/sys/menu/add").and(accept(APPLICATION_JSON)), handler::add));
     }
 

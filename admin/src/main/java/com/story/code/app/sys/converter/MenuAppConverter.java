@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MenuAppConverter implements RequestQueryToDatabaseParam<MenuPageListQuery, MenuPageListParam>,
-    DataObjectToValueObject<ResourceMenuDO, MenuPageListVO> {
+    DataObjectToValueObject<ResourceMenuDO, MenuPageListVO>{
 
     @Override
     public MenuPageListParam toParam(MenuPageListQuery query) {
@@ -31,6 +31,4 @@ public class MenuAppConverter implements RequestQueryToDatabaseParam<MenuPageLis
         BeanMapperHelper.copy(data, vo);
         return vo;
     }
-
-
 }
