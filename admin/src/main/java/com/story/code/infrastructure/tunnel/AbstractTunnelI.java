@@ -1,7 +1,5 @@
 package com.story.code.infrastructure.tunnel;
 
-import reactor.core.publisher.Mono;
-
 /**
  * @author storys.zhang@gmail.com
  * <p>
@@ -15,21 +13,23 @@ public interface AbstractTunnelI<T extends AbstractDO> {
      * @param id
      * @return
      */
-    Mono<T> get(Long id);
+    T get(Long id);
 
     /**
      * create
      *
      * @param record
+     * @param loginUser
      * @return
      */
-    Mono<Integer> create(T record);
+    int create(T record, String loginUser);
 
     /**
      * update
      *
      * @param record
+     * @param loginUser
      * @return
      */
-    Mono<Integer> update(T record);
+    int update(T record, String loginUser);
 }

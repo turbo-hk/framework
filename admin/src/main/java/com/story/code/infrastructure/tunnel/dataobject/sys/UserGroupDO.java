@@ -22,9 +22,6 @@ public class UserGroupDO extends AbstractDO {
     /**  */
     private Long groupId;
 
-    /** 租户ID */
-    private Long tenantId;
-
     /**  */
     private Long userId;
 

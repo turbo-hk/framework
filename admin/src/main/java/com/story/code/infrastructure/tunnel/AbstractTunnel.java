@@ -2,10 +2,8 @@ package com.story.code.infrastructure.tunnel;
 
 import static com.story.code.infrastructure.tunnel.common.Constants.DEFAULT_LONG;
 
-import com.story.code.boot.security.SecurityUtils;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import reactor.core.publisher.Mono;
 
 /**
  * @author storys.zhang@gmail.com
@@ -18,28 +16,24 @@ public class AbstractTunnel<T extends AbstractDO, DAO extends AbstractDAO> imple
     protected DAO dao;
 
     @Override
-    public Mono<T> get(Long id) {
-        return Mono.justOrEmpty((T) dao.get(id));
+    public T get(Long id) {
+        return (T) dao.get(id);
     }
 
     @Override
-    public Mono<Integer> create(T record) {
-        return SecurityUtils.getUserName().map(userName -> {
-            record.setCreateBy(userName);
-            record.setGmtCreate(LocalDateTime.now());
-            record.setDelFlag(Boolean.FALSE);
-            record.setVersion(DEFAULT_LONG);
-            return dao.insert(record);
-        });
+    public int create(T record, String loginUser) {
+        record.setCreateBy(loginUser);
+        record.setGmtCreate(LocalDateTime.now());
+        record.setDelFlag(Boolean.FALSE);
+        record.setVersion(DEFAULT_LONG);
+        return dao.insert(record);
     }
 
     @Override
-    public Mono<Integer> update(T record) {
-        return SecurityUtils.getUserName().map(userName -> {
-            record.setModifiedBy(userName);
-            record.setGmtModified(LocalDateTime.now());
-            record.setVersion(record.getVersion() + 1);
-            return dao.update(record);
-        });
+    public int update(T record, String loginUser) {
+        record.setModifiedBy(loginUser);
+        record.setGmtModified(LocalDateTime.now());
+        record.setVersion(record.getVersion() + 1);
+        return dao.update(record);
     }
 }

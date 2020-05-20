@@ -31,5 +31,4 @@ public interface UserGroupDAO extends AbstractDAO<UserGroupDO> {
      * @return
      */
     List<UserGroupDO> listByUserId(@Param("userId") Long userId);
-
 }

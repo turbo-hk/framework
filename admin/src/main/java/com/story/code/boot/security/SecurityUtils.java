@@ -1,6 +1,7 @@
 package com.story.code.boot.security;
 
 import com.story.code.boot.SpringContextHolder;
+import com.story.code.boot.security.TokenProvider.TokenLoginUser;
 import com.story.code.boot.security.request.ReactiveRequestContextHolder;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
@@ -29,19 +30,16 @@ public class SecurityUtils {
         return tokenProvider.get(token).map(securityContext -> securityContext.getAuthentication());
     }
 
-    public static Mono<Long> getUserId() {
+    public static Mono<TokenLoginUser> getLoginUser() {
         return ReactiveRequestContextHolder.getRequest().map(request -> request.getHeaders().getFirst("Authorization"))
             .filter(Objects::nonNull)
             .map(token -> TokenAuthenticationConverter.formatToken(token))
-            .map(token -> SpringContextHolder.getBean(TokenProvider.class).getUserId(token));
-
-    }
-    public static Mono<String> getUserName() {
-        return ReactiveRequestContextHolder.getRequest().map(request -> request.getHeaders().getFirst("Authorization"))
-            .filter(Objects::nonNull)
-            .map(token -> TokenAuthenticationConverter.formatToken(token))
-            .map(token -> SpringContextHolder.getBean(TokenProvider.class).getUserName(token));
-
+            .map(token -> SpringContextHolder.getBean(TokenProvider.class).getLoginUser(token));
     }
 
+    public static TokenLoginUser getLoginUser(ServerHttpRequest request) {
+        String authorization = request.getHeaders().getFirst("Authorization");
+        String token = TokenAuthenticationConverter.formatToken(authorization);
+        return SpringContextHolder.getBean(TokenProvider.class).getLoginUser(token);
+    }
 }

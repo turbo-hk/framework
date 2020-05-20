@@ -2,7 +2,6 @@ package com.story.code.component;
 
 import java.util.Objects;
 import lombok.Getter;
-import reactor.core.publisher.Mono;
 
 /**
  * @author storys.zhang@gmail.com
@@ -22,26 +21,21 @@ public class DataPersistComponent<T, D> {
      */
     private Long id;
 
-    /**
-     * 根据ID查询出来的数据库对象，id为null时data=null
-     */
-    private D data;
-
     public DataPersistComponent(T command, Long id) {
         this.command = command;
         this.id = id;
     }
 
-    private PersistStrategyFunction<DataPersistComponent<T, D>> createPersistStrategyFunction;
-    private PersistStrategyFunction<DataPersistComponent<T, D>> updatePersistStrategyFunction;
+    private PersistStrategyFunction createPersistStrategyFunction;
+    private PersistStrategyFunction updatePersistStrategyFunction;
     private ValidatorFunction<T> validatorFunction;
 
-    public DataPersistComponent addCreatePersistStrategyFunction(PersistStrategyFunction<DataPersistComponent<T, D>> function) {
+    public DataPersistComponent addCreatePersistStrategyFunction(PersistStrategyFunction function) {
         this.createPersistStrategyFunction = function;
         return this;
     }
 
-    public DataPersistComponent addUpdatePersistStrategyFunction(PersistStrategyFunction<DataPersistComponent<T, D>> function) {
+    public DataPersistComponent addUpdatePersistStrategyFunction(PersistStrategyFunction function) {
         this.updatePersistStrategyFunction = function;
         return this;
     }
@@ -55,7 +49,7 @@ public class DataPersistComponent<T, D> {
         return this;
     }
 
-    public Mono<Integer> persist() {
+    public int persist() {
         if (Objects.nonNull(validatorFunction)) {
             validatorFunction.validate(this.command);
         }
@@ -66,14 +60,14 @@ public class DataPersistComponent<T, D> {
     }
 
     @FunctionalInterface
-    public interface PersistStrategyFunction<DataPersistComponent> {
+    public interface PersistStrategyFunction {
 
         /**
          * 持久化
          *
          * @return
          */
-        Mono<Integer> persist();
+        int persist();
     }
 
     @FunctionalInterface

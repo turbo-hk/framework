@@ -5,7 +5,9 @@ import static com.story.code.infrastructure.tunnel.common.Constants.DEFAULT_LONG
 
 import com.story.code.app.sys.command.OrganizationPersistCommand;
 import com.story.code.boot.exception.custom.DataPersistenceException;
+import com.story.code.boot.security.SecurityUtils;
 import com.story.code.boot.security.TenantIdUtil;
+import com.story.code.boot.security.TokenProvider.TokenLoginUser;
 import com.story.code.helper.OrganizationUidGenerator;
 import com.story.code.helper.StringHelper;
 import com.story.code.infrastructure.tunnel.dataobject.sys.OrganizationDO;
@@ -29,16 +31,15 @@ public class OrganizationHandler {
     private OrganizationTunnelI organizationTunnel;
 
     public Mono<ServerResponse> add(ServerRequest request) {
+        TokenLoginUser loginUser = SecurityUtils.getLoginUser(request.exchange().getRequest());
         return request.bodyToMono(OrganizationPersistCommand.class).map(command -> {
             command.setParentId(Optional.ofNullable(command.getParentId()).orElse(DEFAULT_LONG));
             return command;
-        }).flatMap(command -> organizationTunnel.maxByParentId(command.getParentId()).switchIfEmpty(
-            organizationTunnel.get(command.getParentId()).map(parentOrganization -> {
-                OrganizationDO emptyOrganization = new OrganizationDO();
-                emptyOrganization.setParentUid(parentOrganization.getUid());
-                return emptyOrganization;
-            })
-        ).flatMap(maxOrganization -> {
+        }).map(command -> {
+            OrganizationDO maxByParentId = organizationTunnel.maxByParentId(command.getParentId());
+            OrganizationDO maxOrganization = Optional.ofNullable(maxByParentId).orElse(new OrganizationDO() {{
+                setParentUid(organizationTunnel.get(command.getParentId()).getUid());
+            }});
             String uid = OrganizationUidGenerator.generate(StringHelper.nullToEmpty(maxOrganization.getParentUid()), maxOrganization.getUid());
             OrganizationDO record = new OrganizationDO();
             record.setName(command.getName());
@@ -46,7 +47,7 @@ public class OrganizationHandler {
             record.setParentUid(StringHelper.nullToEmpty(maxOrganization.getParentUid()));
             record.setTenantId(TenantIdUtil.getTenantId());
             record.setUid(uid);
-            return organizationTunnel.create(record);
-        })).doOnSuccess(count -> DataPersistenceException.verify(count, "保存组织机构失败")).flatMap(count -> ServerResponse.ok().bodyValue(defaultSuccessful()));
+            return organizationTunnel.create(record, loginUser.getUserName());
+        }).doOnSuccess(count -> DataPersistenceException.verify(count, "保存组织机构失败")).flatMap(count -> ServerResponse.ok().bodyValue(defaultSuccessful()));
     }
 }

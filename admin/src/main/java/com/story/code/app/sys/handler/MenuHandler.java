@@ -9,6 +9,7 @@ import com.story.code.app.sys.validator.MenuPersistValidator;
 import com.story.code.app.sys.vo.MenuPageListVO;
 import com.story.code.boot.security.SecurityUtils;
 import com.story.code.boot.security.TenantIdUtil;
+import com.story.code.boot.security.TokenProvider.TokenLoginUser;
 import com.story.code.common.ApiResponseVO;
 import com.story.code.common.page.reactive.PageReactiveWrapper;
 import com.story.code.component.DataPersistComponent;
@@ -43,7 +44,7 @@ public class MenuHandler {
 
 
     public Mono<ServerResponse> authority(ServerRequest request) {
-        return SecurityUtils.getUserId().map(userId -> userAuthorityFactory.userAuthorityAggregation(userId).getMenuTreeNodeList())
+        return SecurityUtils.getLoginUser().map(loginUser -> userAuthorityFactory.userAuthorityAggregation(loginUser.getLoginUserId()).getMenuTreeNodeList())
             .flatMap(data -> ServerResponse.ok().bodyValue(ApiResponseVO.<List<MenuTreeNode>>create().data(data).buildSuccess()));
     }
 
@@ -57,7 +58,8 @@ public class MenuHandler {
     }
 
     public Mono<ServerResponse> add(ServerRequest request) {
-        return request.bodyToMono(MenuPersistCommand.class).flatMap(command -> {
+        TokenLoginUser loginUser = SecurityUtils.getLoginUser(request.exchange().getRequest());
+        return request.bodyToMono(MenuPersistCommand.class).map(command -> {
             DataPersistComponent<MenuPersistCommand, ResourceMenuDO> component = new DataPersistComponent(command, command.getId());
             component.addValidatorFunction(menuPersistValidator::validate);
             component.addCreatePersistStrategyFunction(() -> {
@@ -68,17 +70,16 @@ public class MenuHandler {
                 data.setTitle(command.getTitle());
                 data.setUrl(command.getUrl());
                 data.setIcon(command.getIcon());
-                return resourceMenuTunnel.create(data);
+                return resourceMenuTunnel.create(data, loginUser.getUserName());
             });
             component.addUpdatePersistStrategyFunction(() -> {
-                return resourceMenuTunnel.get(command.getId()).flatMap(data -> {
-                    data.setParentId(command.getParentId());
-                    data.setRankNum(command.getRankNum());
-                    data.setTitle(command.getTitle());
-                    data.setUrl(command.getUrl());
-                    data.setIcon(command.getIcon());
-                    return resourceMenuTunnel.update(data);
-                });
+                ResourceMenuDO data = resourceMenuTunnel.get(command.getId());
+                data.setParentId(command.getParentId());
+                data.setRankNum(command.getRankNum());
+                data.setTitle(command.getTitle());
+                data.setUrl(command.getUrl());
+                data.setIcon(command.getIcon());
+                return resourceMenuTunnel.update(data, loginUser.getUserName());
             });
             return component.persist();
         })

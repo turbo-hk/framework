@@ -5,7 +5,6 @@ package com.story.code.infrastructure.tunnel.datatunnel;
 
 import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.OrganizationDO;
-import reactor.core.publisher.Mono;
 
 
 /**
@@ -29,5 +28,5 @@ public interface OrganizationTunnelI extends AbstractTunnelI<OrganizationDO> {
      * @param parentId
      * @return
      */
-    Mono<OrganizationDO> maxByParentId(Long parentId);
+    OrganizationDO maxByParentId(Long parentId);
 }

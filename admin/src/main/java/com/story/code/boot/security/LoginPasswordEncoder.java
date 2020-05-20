@@ -3,6 +3,7 @@ package com.story.code.boot.security;
 import com.story.code.helper.StringHelper;
 import com.story.code.helper.crypto.LoginPasswordHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -35,6 +36,10 @@ public class LoginPasswordEncoder implements PasswordEncoder {
     public boolean matches(CharSequence cs, String string, String salt) {
         log.debug("cs:{}, str:{}, salt:{}", cs, string, salt);
         return encode(cs, salt).equals(string);
+    }
+
+    public String randomSalt() {
+        return RandomStringUtils.random(6, "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789");
     }
 
 }

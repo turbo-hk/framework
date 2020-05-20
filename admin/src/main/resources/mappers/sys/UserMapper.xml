@@ -55,7 +55,7 @@
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
-    <insert id="insert" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.UserDO">
+    <insert id="insert" parameterType="com.story.code.infrastructure.tunnel.dataobject.sys.UserDO" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO sys_user (
                     create_by,
             del_flag,

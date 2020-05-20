@@ -10,6 +10,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +41,7 @@ public class TokenProvider {
 
 
     private String RSA_SEED = "handongzhengfawei";
-    private long expireSeconds = 1800;
+    private long expireSeconds = 18000;
     private String redisPrefix = "login:token:";
 
     @PostConstruct
@@ -73,19 +77,11 @@ public class TokenProvider {
     }
 
     @SneakyThrows
-    public Long getUserId(String token) {
+    public TokenLoginUser getLoginUser(String token) {
         String decryptToken = RsaHelper.decrypt(rsaKeyPair.getPublicKey(), token);
         log.debug("解密后Token: {}", decryptToken);
         List<String> splitToList = Splitter.on("^").splitToList(decryptToken);
-        return Long.valueOf(splitToList.get(1));
-    }
-
-    @SneakyThrows
-    public String getUserName(String token) {
-        String decryptToken = RsaHelper.decrypt(rsaKeyPair.getPublicKey(), token);
-        log.debug("解密后Token: {}", decryptToken);
-        List<String> splitToList = Splitter.on("^").splitToList(decryptToken);
-        return splitToList.get(2);
+        return TokenLoginUser.builder().loginUserId(Long.valueOf(splitToList.get(1))).userName(splitToList.get(2)).build();
     }
 
     public Mono<Boolean> validateToken(String authToken) {
@@ -98,6 +94,16 @@ public class TokenProvider {
         String redisKey = StringHelper.join(redisPrefix, authToken);
         Mono<Long> longMono = redisOps.value.get(redisKey);
         return longMono.map(id -> Objects.nonNull(id));
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class TokenLoginUser {
+
+        private Long loginUserId;
+        private String userName;
     }
 
 }

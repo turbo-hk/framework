@@ -64,4 +64,18 @@ public class CollectionHelper {
         }
         return list;
     }
+
+    /**
+     * null转换为空集合， 非null则不处理
+     *
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> nullToEmpty(List<T> list) {
+        if (Objects.isNull(list)) {
+            return EMPTY;
+        }
+        return list;
+    }
 }

@@ -25,10 +25,11 @@ public interface UserGroupTunnelI extends AbstractTunnelI<UserGroupDO> {
     int delete(Long id);
 
     /**
-     *  查询用户组列表
+     * 查询用户组列表
      *
      * @param userId
      * @return
      */
     List<UserGroupDO> listByUserId(Long userId);
+
 }
