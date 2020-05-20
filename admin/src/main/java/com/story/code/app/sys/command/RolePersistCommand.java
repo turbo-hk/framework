@@ -8,7 +8,7 @@ import lombok.Data;
  * Created at 2020/5/20 by Storys.Zhang
  */
 @Data
-public class GroupPersistCommand {
+public class RolePersistCommand {
 
     private Long id;
 

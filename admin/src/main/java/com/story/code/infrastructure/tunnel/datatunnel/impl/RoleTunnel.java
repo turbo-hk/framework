@@ -9,6 +9,7 @@ import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
 import com.story.code.infrastructure.tunnel.datatunnel.RoleTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.RoleDAO;
+import com.story.code.infrastructure.tunnel.param.sys.RolePageListParam;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +43,11 @@ public class RoleTunnel extends AbstractTunnel<RoleDO, RoleDAO> implements RoleT
         List<RoleDO> children = dao.listByParentId(parentId);
         getChildren(children, flatList);
         return flatList;
+    }
+
+    @Override
+    public List<RoleDO> pageList(RolePageListParam param) {
+        return dao.pageList(param);
     }
 
     private void getChildren(List<RoleDO> children, List<RoleDO> flatList) {

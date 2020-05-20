@@ -5,6 +5,13 @@ package com.story.code.component.saveorupdate;
  * <p>
  * Created at 2020/5/20 by Storys.Zhang
  */
-public interface ValidatorFunction {
+@FunctionalInterface
+public interface ValidatorFunction<T> {
 
+    /**
+     * 验证
+     *
+     * @param t
+     */
+    void validate(T t);
 }

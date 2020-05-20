@@ -1,11 +1,11 @@
 package com.story.code.app.sys.converter;
 
-import com.story.code.app.sys.query.GroupPageListQuery;
-import com.story.code.app.sys.vo.GroupPageListVO;
+import com.story.code.app.sys.query.RolePageListQuery;
+import com.story.code.app.sys.vo.RolePageListVO;
 import com.story.code.common.converter.DataObjectToValueObject;
 import com.story.code.common.converter.RequestQueryToDatabaseParam;
-import com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO;
-import com.story.code.infrastructure.tunnel.param.sys.GroupPageListParam;
+import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
+import com.story.code.infrastructure.tunnel.param.sys.RolePageListParam;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
  * Created at 2020/5/20 by Storys.Zhang
  */
 @Component
-public class GroupAppConverter implements RequestQueryToDatabaseParam<GroupPageListQuery, GroupPageListParam>, DataObjectToValueObject<GroupDO, GroupPageListVO> {
+public class RoleAppConverter implements RequestQueryToDatabaseParam<RolePageListQuery, RolePageListParam>, DataObjectToValueObject<RoleDO, RolePageListVO> {
 
     @Override
-    public GroupPageListVO doToVo(GroupDO data) {
-        GroupPageListVO vo = new GroupPageListVO();
+    public RolePageListVO doToVo(RoleDO data) {
+        RolePageListVO vo = new RolePageListVO();
         vo.setId(data.getId());
         vo.setParentId(data.getParentId());
         vo.setName(data.getName());
@@ -26,8 +26,8 @@ public class GroupAppConverter implements RequestQueryToDatabaseParam<GroupPageL
     }
 
     @Override
-    public GroupPageListParam toParam(GroupPageListQuery query) {
-        GroupPageListParam param = new GroupPageListParam();
+    public RolePageListParam toParam(RolePageListQuery query) {
+        RolePageListParam param = new RolePageListParam();
         param.setParentId(query.getParentId());
         return param;
     }

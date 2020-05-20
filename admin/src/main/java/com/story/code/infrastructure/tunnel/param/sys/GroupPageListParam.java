@@ -11,10 +11,8 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserPageListParam extends AbstractParam {
+public class GroupPageListParam extends AbstractParam {
 
-    private String userName;
-
-    private Boolean disabled;
+    private Long parentId;
 
 }

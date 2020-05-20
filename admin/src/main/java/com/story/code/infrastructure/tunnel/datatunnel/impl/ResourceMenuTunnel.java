@@ -11,7 +11,6 @@ import com.story.code.infrastructure.tunnel.datatunnel.database.sys.ResourceMenu
 import com.story.code.infrastructure.tunnel.param.sys.MenuPageListParam;
 import java.util.List;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Mono;
 
 /**
  * @author storys.zhang@gmail.com
@@ -27,8 +26,8 @@ public class ResourceMenuTunnel extends AbstractTunnel<ResourceMenuDO, ResourceM
     }
 
     @Override
-    public Mono<List<ResourceMenuDO>> pageList(MenuPageListParam query) {
-        return Mono.justOrEmpty(dao.pageList(query));
+    public List<ResourceMenuDO> pageList(MenuPageListParam query) {
+        return dao.pageList(query);
     }
 
     @Override

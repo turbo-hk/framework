@@ -11,13 +11,14 @@ import com.story.code.boot.security.SecurityUtils;
 import com.story.code.boot.security.TenantIdUtil;
 import com.story.code.boot.security.TokenProvider.TokenLoginUser;
 import com.story.code.common.ApiResponseVO;
-import com.story.code.common.page.reactive.PageReactiveWrapper;
-import com.story.code.component.DataPersistComponent;
+import com.story.code.component.page.PageComponent;
 import com.story.code.component.page.vo.PageVO;
+import com.story.code.component.saveorupdate.DataPersistComponent;
 import com.story.code.domain.sys.factory.UserAuthorityFactory;
 import com.story.code.domain.sys.valueobject.MenuTreeNode;
 import com.story.code.infrastructure.tunnel.dataobject.sys.ResourceMenuDO;
 import com.story.code.infrastructure.tunnel.datatunnel.ResourceMenuTunnelI;
+import com.story.code.infrastructure.tunnel.param.sys.MenuPageListParam;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,7 +37,7 @@ public class MenuHandler {
     @Autowired
     private ResourceMenuTunnelI resourceMenuTunnel;
     @Autowired
-    private MenuAppConverter menuConverter;
+    private MenuAppConverter menuAppConverter;
     @Autowired
     private UserAuthorityFactory userAuthorityFactory;
     @Autowired
@@ -50,10 +51,11 @@ public class MenuHandler {
 
     public Mono<ServerResponse> page(ServerRequest request) {
 
-        return request.bodyToMono(MenuPageListQuery.class).flatMap(query -> {
-            Mono<PageVO<MenuPageListVO>> page = PageReactiveWrapper
-                .page(resourceMenuTunnel::pageList, menuConverter::doToVo, query.getPage(), menuConverter.toParam(query));
-            return page;
+        return request.bodyToMono(MenuPageListQuery.class).map(query -> {
+            PageComponent<MenuPageListParam, ResourceMenuDO, MenuPageListVO> component = new PageComponent(query, query.getPage());
+            component.buildDataListFunction(resourceMenuTunnel::pageList);
+            component.buildConvertVoFunction(menuAppConverter::doToVo);
+            return component.page();
         }).flatMap(page -> ServerResponse.ok().bodyValue(ApiResponseVO.<PageVO<MenuPageListVO>>create().data(page).buildSuccess()));
     }
 

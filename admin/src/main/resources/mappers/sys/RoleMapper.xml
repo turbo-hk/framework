@@ -103,6 +103,21 @@
         select <include refid="Base_Column_List" /> from sys_role where parent_id = #{parentId, jdbcType=BIGINT} and del_flag = 0
     </select>
 
+    <select id="pageList" parameterType="com.story.code.infrastructure.tunnel.param.sys.RolePageListParam" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        <where>
+            <if test="null != parentId">
+                AND parent_id = #{parentId, jdbcType=BIGINT}
+            </if>
+            <if test="null !=tenantId">
+                AND tenant_id = #{tenantId, jdbcType=BIGINT}
+            </if>
+            AND del_flag = #{DEL_FLAG}
+        </where>
+    </select>
+
 </mapper>
 
 

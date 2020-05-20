@@ -5,6 +5,7 @@ package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
 import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO;
+import com.story.code.infrastructure.tunnel.param.sys.GroupPageListParam;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,12 @@ public interface GroupDAO extends AbstractDAO<GroupDO> {
      * @return
      */
     List<GroupDO> listByParentId(@Param("parentId") Long parentId);
+
+    /**
+     * 分页查询
+     *
+     * @param param
+     * @return
+     */
+    List<GroupDO> pageList(GroupPageListParam param);
 }

@@ -5,6 +5,7 @@ package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
 import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
+import com.story.code.infrastructure.tunnel.param.sys.RolePageListParam;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -39,4 +40,11 @@ public interface RoleDAO extends AbstractDAO<RoleDO> {
      */
     List<RoleDO> listByParentId(@Param("parentId") Long parentId);
 
+    /**
+     * 分页
+     *
+     * @param param
+     * @return
+     */
+    List<RoleDO> pageList(RolePageListParam param);
 }

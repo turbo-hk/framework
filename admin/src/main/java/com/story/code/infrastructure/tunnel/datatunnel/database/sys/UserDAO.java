@@ -41,5 +41,5 @@ public interface UserDAO extends AbstractDAO<UserDO> {
      * @param query
      * @return
      */
-    List<UserDO> page(UserPageListParam query);
+    List<UserDO> pageList(UserPageListParam query);
 }

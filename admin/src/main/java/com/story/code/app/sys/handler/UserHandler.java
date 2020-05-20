@@ -8,11 +8,13 @@ import com.story.code.app.sys.vo.UserPageListVO;
 import com.story.code.boot.security.SecurityUtils;
 import com.story.code.boot.security.TokenProvider.TokenLoginUser;
 import com.story.code.common.ApiResponseVO;
-import com.story.code.common.page.reactive.PageReactiveWrapper;
+import com.story.code.component.page.PageComponent;
 import com.story.code.component.page.vo.PageVO;
 import com.story.code.domain.sys.dto.UserPersistDTO;
 import com.story.code.domain.sys.repository.UserRepository;
+import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import com.story.code.infrastructure.tunnel.datatunnel.UserTunnelI;
+import com.story.code.infrastructure.tunnel.param.sys.UserPageListParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -37,9 +39,12 @@ public class UserHandler {
     private UserPersistValidator userPersistValidator;
 
     public Mono<ServerResponse> page(ServerRequest request) {
-        return request.bodyToMono(UserPageListQuery.class).flatMap(query ->
-            PageReactiveWrapper
-                .page(userTunnel::page, userAppConverter::doToVo, query.getPage(), userAppConverter.toParam(query))
+        return request.bodyToMono(UserPageListQuery.class).map(query -> {
+                PageComponent<UserPageListParam, UserDO, UserPageListVO> component = new PageComponent(userAppConverter.toParam(query), query.getPage());
+                component.buildDataListFunction(userTunnel::pageList);
+                component.buildConvertVoFunction(userAppConverter::doToVo);
+                return component.page();
+            }
         ).flatMap(page -> ServerResponse.ok().bodyValue(ApiResponseVO.<PageVO<UserPageListVO>>create().data(page).buildSuccess()));
     }
 

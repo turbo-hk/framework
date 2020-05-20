@@ -1,6 +1,6 @@
 /**
-* Copyright (c) 2019, Credan(上海)-版权所有
-*/
+ * Copyright (c) 2019, Credan(上海)-版权所有
+ */
 package com.story.code.infrastructure.tunnel.datatunnel.impl;
 
 import com.story.code.infrastructure.tunnel.AbstractTunnel;
@@ -13,17 +13,15 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 /**
-*
-*
-* @author storys.zhang@gmail.com
-*
-* Created at 2020-03-26 16:20:36 by Storys.Zhang
-*/
+ * @author storys.zhang@gmail.com
+ * <p>
+ * Created at 2020-03-26 16:20:36 by Storys.Zhang
+ */
 @Component
-public class UserTunnel extends AbstractTunnel<UserDO, UserDAO> implements UserTunnelI{
+public class UserTunnel extends AbstractTunnel<UserDO, UserDAO> implements UserTunnelI {
 
     @Override
-    public int delete(Long id){
+    public int delete(Long id) {
         return dao.delete(id);
     }
 
@@ -33,8 +31,8 @@ public class UserTunnel extends AbstractTunnel<UserDO, UserDAO> implements UserT
     }
 
     @Override
-    public Mono<List<UserDO>> page(UserPageListParam query) {
-        return Mono.justOrEmpty(dao.page(query));
+    public List<UserDO> pageList(UserPageListParam query) {
+        return dao.pageList(query);
     }
 
 }

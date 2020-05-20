@@ -1,4 +1,4 @@
-package com.story.code.component;
+package com.story.code.component.saveorupdate;
 
 import java.util.Objects;
 import lombok.Getter;
@@ -44,7 +44,7 @@ public class DataPersistComponent<T, D> {
         this.validatorFunction = function;
     }
 
-    public DataPersistComponent validate(ValidatorFunction<T> function) {
+    public DataPersistComponent validate(ValidatorFunction function) {
         function.validate(command);
         return this;
     }
@@ -57,28 +57,6 @@ public class DataPersistComponent<T, D> {
             return this.createPersistStrategyFunction.persist();
         }
         return this.updatePersistStrategyFunction.persist();
-    }
-
-    @FunctionalInterface
-    public interface PersistStrategyFunction {
-
-        /**
-         * 持久化
-         *
-         * @return
-         */
-        int persist();
-    }
-
-    @FunctionalInterface
-    public interface ValidatorFunction<T> {
-
-        /**
-         * 验证
-         *
-         * @param t
-         */
-        void validate(T t);
     }
 
 }

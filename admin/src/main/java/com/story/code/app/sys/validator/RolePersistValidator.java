@@ -1,6 +1,6 @@
 package com.story.code.app.sys.validator;
 
-import com.story.code.app.sys.command.GroupPersistCommand;
+import com.story.code.app.sys.command.RolePersistCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class GroupPersistValidator {
-    public void validate(GroupPersistCommand command){
-        log.debug("新建group验证器{}", command);
+public class RolePersistValidator {
+    public void validate(RolePersistCommand command){
+        log.debug("新建role验证器{}", command);
     }
 }

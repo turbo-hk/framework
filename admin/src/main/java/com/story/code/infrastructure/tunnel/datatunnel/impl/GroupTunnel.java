@@ -8,6 +8,7 @@ import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO;
 import com.story.code.infrastructure.tunnel.datatunnel.GroupTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.GroupDAO;
+import com.story.code.infrastructure.tunnel.param.sys.GroupPageListParam;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +34,11 @@ public class GroupTunnel extends AbstractTunnel<GroupDO, GroupDAO> implements Gr
         List<GroupDO> children = dao.listByParentId(parentId);
         getChildren(children, flatList);
         return flatList;
+    }
+
+    @Override
+    public List<GroupDO> pageList(GroupPageListParam param) {
+        return dao.pageList(param);
     }
 
     private void getChildren(List<GroupDO> children, List<GroupDO> flatList) {

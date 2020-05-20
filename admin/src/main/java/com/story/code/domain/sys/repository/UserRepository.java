@@ -2,7 +2,7 @@ package com.story.code.domain.sys.repository;
 
 import com.story.code.boot.security.TenantIdUtil;
 import com.story.code.common.enums.BooleanColumnEnum;
-import com.story.code.component.DataPersistComponent;
+import com.story.code.component.saveorupdate.DataPersistComponent;
 import com.story.code.component.collection.difference.DataPersistCollectionDifferenceComponent;
 import com.story.code.domain.sys.dto.UserPersistDTO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
@@ -66,7 +66,7 @@ public class UserRepository {
 
         DataPersistCollectionDifferenceComponent<Long> groupIds = dto.getGroupIds().buildAdd().buildDelete();
         List<Long> addGroupIds = groupIds.add();
-        UserGroupDO userGroupRecord = null;
+        UserGroupDO userGroupRecord;
         for (Long groupId : addGroupIds) {
             userGroupRecord = new UserGroupDO();
             userGroupRecord.setGroupId(groupId);
@@ -80,7 +80,7 @@ public class UserRepository {
 
         DataPersistCollectionDifferenceComponent<Long> roleIds = dto.getRoleIds().buildAdd().buildDelete();
         List<Long> addRoleIds = roleIds.add();
-        UserRoleDO userRoleRecord = null;
+        UserRoleDO userRoleRecord;
         for (Long roleId : addRoleIds) {
             userRoleRecord = new UserRoleDO();
             userRoleRecord.setRoleId(roleId);

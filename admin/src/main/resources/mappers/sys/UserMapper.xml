@@ -124,7 +124,7 @@
         and del_flag = 0
     </select>
 
-    <select id="page" parameterType="com.story.code.infrastructure.tunnel.param.sys.UserPageListParam" resultMap="BaseResultMap">
+    <select id="pageList" parameterType="com.story.code.infrastructure.tunnel.param.sys.UserPageListParam" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_user

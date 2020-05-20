@@ -5,6 +5,14 @@ package com.story.code.component.page;
  * <p>
  * Created at 2020/5/20 by Storys.Zhang
  */
-public interface ConvertVoFunction {
+@FunctionalInterface
+public interface ConvertVoFunction<T, V> {
 
+    /**
+     * 转换
+     *
+     * @param t
+     * @return
+     */
+    V convert(T t);
 }

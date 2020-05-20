@@ -5,6 +5,7 @@ package com.story.code.infrastructure.tunnel.datatunnel;
 
 import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
+import com.story.code.infrastructure.tunnel.param.sys.RolePageListParam;
 import java.util.List;
 
 
@@ -40,4 +41,12 @@ public interface RoleTunnelI extends AbstractTunnelI<RoleDO> {
      * @return
      */
     List<RoleDO> listChildren(Long parentId);
+
+    /**
+     * 分页
+     *
+     * @param param
+     * @return
+     */
+    List<RoleDO> pageList(RolePageListParam param);
 }
