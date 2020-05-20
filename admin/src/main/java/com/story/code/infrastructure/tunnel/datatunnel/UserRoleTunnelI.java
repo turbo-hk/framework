@@ -16,12 +16,13 @@ import java.util.List;
 public interface UserRoleTunnelI extends AbstractTunnelI<UserRoleDO> {
 
     /**
-     * delete object by id
+     * delete object by userId, roleId
      *
-     * @param id
+     * @param userId
+     * @param roleId
      * @return
      */
-    int delete(Long id);
+    int deleteByUserIdAndRoleId(Long userId, Long roleId);
 
     /**
      * 用户关联的所有角色

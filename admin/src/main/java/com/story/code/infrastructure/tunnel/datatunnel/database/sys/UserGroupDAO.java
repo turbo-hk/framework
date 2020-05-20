@@ -16,19 +16,19 @@ import org.apache.ibatis.annotations.Param;
 public interface UserGroupDAO extends AbstractDAO<UserGroupDO> {
 
     /**
-     * delete object by id
-     *
-     *
-     * @param id
-     * @return
-     */
-    int delete(@Param("id") Long id);
-
-    /**
      * 查询用户组列表
      *
      * @param userId
      * @return
      */
     List<UserGroupDO> listByUserId(@Param("userId") Long userId);
+
+    /**
+     * 根据组合主键删除
+     *
+     * @param userId
+     * @param groupId
+     * @return
+     */
+    int deleteByUserIdAndGroupId(@Param("userId") Long userId, @Param("groupId") Long groupId);
 }

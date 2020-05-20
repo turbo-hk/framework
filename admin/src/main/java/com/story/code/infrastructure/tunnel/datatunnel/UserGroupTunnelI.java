@@ -17,12 +17,13 @@ public interface UserGroupTunnelI extends AbstractTunnelI<UserGroupDO> {
 
 
     /**
-     * delete object by id
+     * delete object by userId, groupId
      *
-     * @param id
+     * @param userId
+     * @param groupId
      * @return
      */
-    int delete(Long id);
+    int deleteByUserIdAndGroupId(Long userId, Long groupId);
 
     /**
      * 查询用户组列表

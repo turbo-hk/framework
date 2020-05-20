@@ -3,6 +3,7 @@ package com.story.code.domain.sys.repository;
 import com.story.code.boot.security.TenantIdUtil;
 import com.story.code.common.enums.BooleanColumnEnum;
 import com.story.code.component.DataPersistComponent;
+import com.story.code.component.collection.difference.DataPersistCollectionDifferenceComponent;
 import com.story.code.domain.sys.dto.UserPersistDTO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserGroupDO;
@@ -63,21 +64,32 @@ public class UserRepository {
         });
         int persist = component.persist();
 
-        List<Long> groupIds = dto.getGroupIds();
+        DataPersistCollectionDifferenceComponent<Long> groupIds = dto.getGroupIds().buildAdd().buildDelete();
+        List<Long> addGroupIds = groupIds.add();
         UserGroupDO userGroupRecord = null;
-        for (Long groupId : groupIds) {
+        for (Long groupId : addGroupIds) {
             userGroupRecord = new UserGroupDO();
             userGroupRecord.setGroupId(groupId);
             userGroupRecord.setUserId(dto.getId());
             persist += userGroupTunnel.create(userGroupRecord, dto.getLoginUser().getUserName());
         }
-        List<Long> roleIds = dto.getRoleIds();
+        List<Long> deleteGroupIds = groupIds.delete();
+        for (Long groupId : deleteGroupIds) {
+            persist += userGroupTunnel.deleteByUserIdAndGroupId(dto.getId(), groupId);
+        }
+
+        DataPersistCollectionDifferenceComponent<Long> roleIds = dto.getRoleIds().buildAdd().buildDelete();
+        List<Long> addRoleIds = roleIds.add();
         UserRoleDO userRoleRecord = null;
-        for (Long roleId : roleIds) {
+        for (Long roleId : addRoleIds) {
             userRoleRecord = new UserRoleDO();
             userRoleRecord.setRoleId(roleId);
             userRoleRecord.setUserId(dto.getId());
             persist += userRoleTunnel.create(userRoleRecord, dto.getLoginUser().getUserName());
+        }
+        List<Long> deleteRoleIds = roleIds.delete();
+        for (Long roleId : deleteRoleIds) {
+            persist += userRoleTunnel.deleteByUserIdAndRoleId(dto.getId(), roleId);
         }
         return persist;
     }

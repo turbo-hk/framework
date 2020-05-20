@@ -9,17 +9,23 @@ import com.story.code.common.converter.DataObjectToValueObject;
 import com.story.code.common.converter.RequestQueryToDTO;
 import com.story.code.common.converter.RequestQueryToDatabaseParam;
 import com.story.code.common.enums.BooleanColumnEnum;
+import com.story.code.component.collection.difference.DataPersistCollectionDifferenceComponent;
 import com.story.code.domain.dict.valueobject.DictNodeCodeEnum;
 import com.story.code.domain.dict.valueobject.DictValueVO;
 import com.story.code.domain.sys.dto.UserPersistDTO;
 import com.story.code.helper.CollectionHelper;
 import com.story.code.infrastructure.tunnel.dataobject.sys.OrganizationDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
+import com.story.code.infrastructure.tunnel.dataobject.sys.UserGroupDO;
+import com.story.code.infrastructure.tunnel.dataobject.sys.UserRoleDO;
 import com.story.code.infrastructure.tunnel.datatunnel.OrganizationTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.UserGroupTunnelI;
+import com.story.code.infrastructure.tunnel.datatunnel.UserRoleTunnelI;
 import com.story.code.infrastructure.tunnel.param.sys.UserPageListParam;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +44,8 @@ public class UserAppConverter implements RequestQueryToDatabaseParam<UserPageLis
     private OrganizationTunnelI organizationTunnel;
     @Autowired
     private UserGroupTunnelI userGroupTunnel;
+    @Autowired
+    private UserRoleTunnelI userRoleTunnel;
 
     @Override
     public UserPageListVO doToVo(UserDO data) {
@@ -64,22 +72,24 @@ public class UserAppConverter implements RequestQueryToDatabaseParam<UserPageLis
 
     @Override
     public UserPersistDTO toDto(UserPersistCommand command) {
+        Long id = command.getId();
         UserPersistDTO dto = new UserPersistDTO();
-        dto.setId(command.getId());
+        dto.setId(id);
         dto.setLoginName(command.getLoginName());
         dto.setMobile(command.getMobile());
         dto.setTel(command.getTel());
         dto.setOrganizationId(command.getOrganizationId());
         String randomSalt = loginPasswordEncoder.randomSalt();
-        String encodePassword= loginPasswordEncoder.encode(command.getPassword(), randomSalt);
+        String encodePassword = loginPasswordEncoder.encode(command.getPassword(), randomSalt);
         dto.setPassword(encodePassword);
         dto.setSalt(randomSalt);
-        dto.setRoleIds(CollectionHelper.nullToEmpty(command.getRoleIds()));
         List<Long> groupIds = command.getGroupIds();
-        if (CollectionHelper.isNotEmpty(groupIds)){
+        Set<Long> dataGroupIds = userGroupTunnel.listByUserId(id).stream().map(UserGroupDO::getGroupId).collect(Collectors.toSet());
+        dto.setGroupIds(new DataPersistCollectionDifferenceComponent<Long>(CollectionHelper.nullToEmpty(groupIds), dataGroupIds));
 
-        }
-        dto.setGroupIds(CollectionHelper.nullToEmpty(groupIds));
+        List<Long> roleIds = command.getRoleIds();
+        Set<Long> dataRoleIds = userRoleTunnel.listByUserId(id).stream().map(UserRoleDO::getRoleId).collect(Collectors.toSet());
+        dto.setRoleIds(new DataPersistCollectionDifferenceComponent<Long>(CollectionHelper.nullToEmpty(roleIds), dataRoleIds));
         OrganizationDO organization = organizationTunnel.get(command.getOrganizationId());
         dto.setDataScopeOrganizationUid(organization.getUid());
         return dto;

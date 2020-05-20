@@ -3,11 +3,15 @@
  */
 package com.story.code.infrastructure.tunnel.datatunnel.impl;
 
+import static com.story.code.infrastructure.tunnel.common.Constants.DEFAULT_LONG;
+
+import com.story.code.helper.CollectionHelper;
 import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserGroupDO;
 import com.story.code.infrastructure.tunnel.datatunnel.UserGroupTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.UserGroupDAO;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,12 +24,15 @@ public class UserGroupTunnel extends AbstractTunnel<UserGroupDO, UserGroupDAO> i
 
 
     @Override
-    public int delete(Long id) {
-        return dao.delete(id);
+    public int deleteByUserIdAndGroupId(Long userId, Long groupId) {
+        return dao.deleteByUserIdAndGroupId(userId, groupId);
     }
 
     @Override
     public List<UserGroupDO> listByUserId(Long userId) {
+        if (Objects.isNull(userId) || DEFAULT_LONG == userId.longValue()) {
+            return CollectionHelper.EMPTY;
+        }
         return dao.listByUserId(userId);
     }
 

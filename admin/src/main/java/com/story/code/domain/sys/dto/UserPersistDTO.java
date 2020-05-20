@@ -1,7 +1,7 @@
 package com.story.code.domain.sys.dto;
 
 import com.story.code.boot.security.TokenProvider.TokenLoginUser;
-import java.util.List;
+import com.story.code.component.collection.difference.DataPersistCollectionDifferenceComponent;
 import lombok.Data;
 
 /**
@@ -26,9 +26,9 @@ public class UserPersistDTO {
 
     private String salt;
 
-    private List<Long> roleIds;
+    private DataPersistCollectionDifferenceComponent<Long> roleIds;
 
-    private List<Long> groupIds;
+    private DataPersistCollectionDifferenceComponent<Long> groupIds;
 
     private TokenLoginUser loginUser;
 
