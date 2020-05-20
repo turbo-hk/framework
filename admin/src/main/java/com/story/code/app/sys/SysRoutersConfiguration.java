@@ -26,7 +26,8 @@ public class SysRoutersConfiguration {
 
     @Bean
     public RouterFunction<ServerResponse> loginRoutersFunction(LoginHandler handler) {
-        return RouterFunctions.route(RequestPredicates.POST("/sys/login").and(accept(APPLICATION_JSON)), handler::login);
+        return RouterFunctions.route(RequestPredicates.POST("/login").and(accept(APPLICATION_JSON)), handler::login)
+            .and(RouterFunctions.route(RequestPredicates.POST("/logout").and(accept(APPLICATION_JSON)), handler::logout));
     }
 
     @Bean

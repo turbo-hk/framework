@@ -42,7 +42,7 @@ public class RoleHandler {
 
     public Mono<ServerResponse> page(ServerRequest request) {
         return request.bodyToMono(RolePageListQuery.class).map(query -> {
-            PageComponent<RolePageListParam, RoleDO, RolePageListVO> component = new PageComponent<RolePageListParam, RoleDO, RolePageListVO>(
+            PageComponent<RolePageListParam, RoleDO, RolePageListVO> component = new PageComponent<>(
                 roleAppConverter.toParam(query), query.getPage());
             component.buildDataListFunction(roleTunnel::pageList);
             component.buildConvertVoFunction(roleAppConverter::doToVo);

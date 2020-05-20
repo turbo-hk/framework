@@ -96,6 +96,11 @@ public class TokenProvider {
         return longMono.map(id -> Objects.nonNull(id));
     }
 
+    public Mono<Boolean> remove(String authorization) {
+        String redisKey = StringHelper.join(redisPrefix, authorization);
+        return redisOps.value.delete(redisKey);
+    }
+
     @Getter
     @Builder
     @NoArgsConstructor

@@ -52,7 +52,8 @@ public class MenuHandler {
     public Mono<ServerResponse> page(ServerRequest request) {
 
         return request.bodyToMono(MenuPageListQuery.class).map(query -> {
-            PageComponent<MenuPageListParam, ResourceMenuDO, MenuPageListVO> component = new PageComponent(query, query.getPage());
+            PageComponent<MenuPageListParam, ResourceMenuDO, MenuPageListVO> component = new PageComponent<>(
+                menuAppConverter.toParam(query), query.getPage());
             component.buildDataListFunction(resourceMenuTunnel::pageList);
             component.buildConvertVoFunction(menuAppConverter::doToVo);
             return component.page();

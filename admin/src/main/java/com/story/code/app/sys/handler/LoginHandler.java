@@ -45,6 +45,10 @@ public class LoginHandler {
             .switchIfEmpty(Mono.error(new UsernameNotFoundException("Bad request")));
     }
 
+    public Mono<ServerResponse> logout(ServerRequest request) {
+        return serverSecurityContextRepository.remove(request.exchange()).flatMap(result -> ServerResponse.ok().bodyValue(ApiResponseVO.defaultSuccessful()));
+    }
+
     private ApiResponseVO<LoginVO> login(String token) {
         LoginVO vo = new LoginVO();
         vo.setToken(token);

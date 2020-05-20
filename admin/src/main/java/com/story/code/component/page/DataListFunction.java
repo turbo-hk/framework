@@ -8,7 +8,7 @@ import java.util.List;
  * Created at 2020/5/20 by Storys.Zhang
  */
 @FunctionalInterface
-public interface DataListFunction<P, T> {
+public interface DataListFunction<T, P> {
 
     /**
      * 分页数据

@@ -19,7 +19,7 @@ public class PageComponent<P, T, V> {
     private PageQuery pageQuery;
 
 
-    private DataListFunction<P, T> dataListFunction;
+    private DataListFunction<T, P> dataListFunction;
 
 
     private ConvertVoFunction<T, V> convertVoFunction;
@@ -29,7 +29,7 @@ public class PageComponent<P, T, V> {
         this.pageQuery = pageQuery;
     }
 
-    public PageComponent buildDataListFunction(DataListFunction<P, T> function) {
+    public PageComponent buildDataListFunction(DataListFunction<T, P> function) {
         this.dataListFunction = function;
         return this;
     }
@@ -44,7 +44,7 @@ public class PageComponent<P, T, V> {
         List<T> dataList = dataListFunction.pageList(this.param);
         PageInfo<T> pageInfo = new PageInfo<>(dataList);
         List<V> list = pageInfo.getList().stream().map(f -> convertVoFunction.convert(f)).collect(Collectors.toList());
-        PageVO pageVO = new PageVO();
+        PageVO<V> pageVO = new PageVO();
         pageVO.setCurrent(pageInfo.getPageNum());
         pageVO.setPageSize(pageInfo.getPageSize());
         pageVO.setTotal(pageInfo.getTotal());

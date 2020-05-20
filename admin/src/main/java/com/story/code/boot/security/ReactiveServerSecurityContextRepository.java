@@ -44,6 +44,11 @@ public class ReactiveServerSecurityContextRepository implements ServerSecurityCo
         ServerHttpRequest request = exchange.getRequest();
         String authorization = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         return tokenProvider.validateToken(authorization).filter(Objects::nonNull).flatMap(auth -> tokenProvider.get(authorization));
+    }
 
+    public Mono<Boolean> remove(ServerWebExchange exchange) {
+        ServerHttpRequest request = exchange.getRequest();
+        String authorization = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+        return tokenProvider.remove(TokenAuthenticationConverter.formatToken(authorization));
     }
 }

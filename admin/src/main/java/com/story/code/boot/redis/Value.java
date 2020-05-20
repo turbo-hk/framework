@@ -32,4 +32,8 @@ public class Value {
             return redisTemplate.opsForValue().set(key, value);
         }
     }
+
+    public Mono<Boolean> delete(String key) {
+        return redisTemplate.opsForValue().delete(key);
+    }
 }

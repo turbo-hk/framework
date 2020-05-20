@@ -26,7 +26,8 @@ import reactor.core.publisher.Mono;
 public class SecurityConfiguration {
 
     private static final String[] AUTH_WHITELIST = {
-        "/**/login"
+        "/login",
+        "/logout",
     };
 
 
