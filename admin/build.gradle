@@ -2,9 +2,12 @@ archivesBaseName = "admin"
 
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
+apply plugin: 'com.bmuschko.docker-spring-boot-application'
+
 ext {
     set('springCloudVersion', "Hoxton.SR3")
 }
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -34,15 +37,22 @@ dependencies {
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$MYBATIS_SPRING_BOOT_VERSION"
     implementation "com.github.pagehelper:pagehelper-spring-boot-starter:$PAGEHELPER_VERSION"
 
-
     compile project(':component-helper')
     compile project(':component-page')
     compile project(':component-tree')
-    compile project(':component-field-desc')
 }
 
 dependencyManagement {
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+docker {
+    springBootApplication {
+        baseImage = 'openjdk:11-alpine'
+        ports = [8080, 8080]
+        images = ['awesome-spring-boot:1.115', 'awesome-spring-boot:latest']
+        jvmArgs = ['-Dspring.profiles.active=local', '-Xmx256m']
     }
 }

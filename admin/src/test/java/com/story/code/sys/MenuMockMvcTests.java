@@ -27,7 +27,7 @@ public class MenuMockMvcTests {
 
     private WebClient webClient;
 
-    @Before
+/*    @Before
     public void setUp() {
         webClient = WebClient.create("http://127.0.0.1:8080");
 
@@ -43,6 +43,6 @@ public class MenuMockMvcTests {
         ApiResponseVO vo = response.block();
 
         System.out.println(vo);
-    }
+    }*/
 
 }

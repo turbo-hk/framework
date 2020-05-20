@@ -7,6 +7,7 @@ buildscript {
 plugins {
     id 'org.springframework.boot'
     id 'io.spring.dependency-management'
+    id 'com.bmuschko.docker-spring-boot-application' version '6.3.0'
 }
 
 apply from: 'init.gradle'
@@ -28,4 +29,6 @@ subprojects {
         maven { url "${REPOSITORIES_MAVEN_URL}" }
         mavenCentral()
     }
+}
+dependencies {
 }
