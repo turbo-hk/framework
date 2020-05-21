@@ -4,11 +4,6 @@ MAINTAINER storys.zhang <storys.zhang@gmail.com>
 
 FROM openjdk:11
 
-COPY jdk11 /var/local/jdk-11
-
-ENV JAVA_HOME /usr/local/java/jdk-11
-ENV PATH $JAVA_HOME/bin:$PATH
-
 # 挂载test-docker目录,创建/tmp目录并持久化到Docker数据文件夹，
 VOLUME /tmp
 # COPY or ADD to image
