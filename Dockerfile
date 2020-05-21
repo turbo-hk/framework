@@ -2,6 +2,8 @@ FROM centos:latest
 
 MAINTAINER storys.zhang <storys.zhang@gmail.com>
 
+FROM openjdk:11
+
 COPY jdk11 /var/local/jdk-11
 
 ENV JAVA_HOME /usr/local/java/jdk-11
