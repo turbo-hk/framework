@@ -1,4 +1,13 @@
-FROM hub.c.163.com/library/java:11-jre
+FROM centos:7
+
+MAINTAINER storys.zhang <storys.zhang@gmail.com>
+
+RUN mkdir /usr/local/java
+ADD jdk-11.0.3_linux-x64_bin.tar.gz /usr/local/java/
+
+ENV JAVA_HOME /usr/local/java/jdk-11.0.3
+ENV PATH $JAVA_HOME/bin:$PATH
+
 # 挂载test-docker目录,创建/tmp目录并持久化到Docker数据文件夹，
 VOLUME /tmp
 # COPY or ADD to image
