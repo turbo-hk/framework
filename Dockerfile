@@ -8,7 +8,7 @@ FROM openjdk:11
 VOLUME /tmp
 # COPY or ADD to image
 # 将编译目标jar包复制到/admin.jar
-ADD admin-0.0.1-SNAPSHOT.jar admin.jar
+ADD admin/build/jars/admin-0.0.1-SNAPSHOT.jar admin.jar
  
 RUN bash -c "touch /admin.jar"
  

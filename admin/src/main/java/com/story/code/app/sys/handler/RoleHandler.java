@@ -14,6 +14,7 @@ import com.story.code.common.ApiResponseVO;
 import com.story.code.component.page.PageComponent;
 import com.story.code.component.page.vo.PageVO;
 import com.story.code.component.saveorupdate.DataPersistComponent;
+import com.story.code.component.saveorupdate.ValidatorFunction;
 import com.story.code.infrastructure.tunnel.dataobject.sys.RoleDO;
 import com.story.code.infrastructure.tunnel.datatunnel.RoleTunnelI;
 import com.story.code.infrastructure.tunnel.param.sys.RolePageListParam;
@@ -51,10 +52,18 @@ public class RoleHandler {
     }
 
     public Mono<ServerResponse> add(ServerRequest request) {
+        return persist(request, rolePersistValidator::validateAdd);
+    }
+
+    public Mono<ServerResponse> update(ServerRequest request) {
+        return persist(request, rolePersistValidator::validateUpdate);
+    }
+
+    private Mono<ServerResponse> persist(ServerRequest request, ValidatorFunction<RolePersistCommand> validatorFunction) {
         TokenLoginUser loginUser = SecurityUtils.getLoginUser(request.exchange().getRequest());
         return request.bodyToMono(RolePersistCommand.class).map(command -> {
             DataPersistComponent<RolePersistCommand, RoleDO> component = new DataPersistComponent(command, command.getId());
-            component.addValidatorFunction(rolePersistValidator::validate);
+            component.addValidatorFunction(validatorFunction);
             component.addCreatePersistStrategyFunction(() -> {
                 RoleDO data = new RoleDO();
                 data.setName(command.getName());

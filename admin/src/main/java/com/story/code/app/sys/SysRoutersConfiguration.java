@@ -32,32 +32,37 @@ public class SysRoutersConfiguration {
 
     @Bean
     public RouterFunction<ServerResponse> organizationRoutersFunction(OrganizationHandler handler) {
-        return RouterFunctions.route(RequestPredicates.POST("/sys/organization/add").and(accept(APPLICATION_JSON)), handler::add);
+        return RouterFunctions.route(RequestPredicates.POST("/sys/organization/add").and(accept(APPLICATION_JSON)), handler::add)
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/organization/update").and(accept(APPLICATION_JSON)), handler::update));
     }
 
     @Bean
     public RouterFunction<ServerResponse> menuRoutersFunction(MenuHandler handler) {
         return RouterFunctions.route(RequestPredicates.POST("/sys/menu/page").and(accept(APPLICATION_JSON)), handler::page)
             .and(RouterFunctions.route(RequestPredicates.POST("/sys/menu/authority").and(accept(APPLICATION_JSON)), handler::authority))
-            .and(RouterFunctions.route(RequestPredicates.POST("/sys/menu/add").and(accept(APPLICATION_JSON)), handler::add));
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/menu/add").and(accept(APPLICATION_JSON)), handler::add))
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/menu/update").and(accept(APPLICATION_JSON)), handler::update));
     }
 
     @Bean
     public RouterFunction<ServerResponse> userRoutersFunction(UserHandler handler) {
         return RouterFunctions.route(RequestPredicates.POST("/sys/user/page").and(accept(APPLICATION_JSON)), handler::page)
-            .and(RouterFunctions.route(RequestPredicates.POST("/sys/user/add").and(accept(APPLICATION_JSON)), handler::add));
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/user/add").and(accept(APPLICATION_JSON)), handler::add))
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/user/update").and(accept(APPLICATION_JSON)), handler::update));
     }
 
     @Bean
     public RouterFunction<ServerResponse> groupRoutersFunction(GroupHandler handler) {
         return RouterFunctions.route(RequestPredicates.POST("/sys/group/page").and(accept(APPLICATION_JSON)), handler::page)
-            .and(RouterFunctions.route(RequestPredicates.POST("/sys/group/add").and(accept(APPLICATION_JSON)), handler::add));
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/group/add").and(accept(APPLICATION_JSON)), handler::add))
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/group/update").and(accept(APPLICATION_JSON)), handler::update));
     }
 
     @Bean
     public RouterFunction<ServerResponse> roleRoutersFunction(RoleHandler handler) {
         return RouterFunctions.route(RequestPredicates.POST("/sys/role/page").and(accept(APPLICATION_JSON)), handler::page)
-            .and(RouterFunctions.route(RequestPredicates.POST("/sys/role/add").and(accept(APPLICATION_JSON)), handler::add));
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/role/add").and(accept(APPLICATION_JSON)), handler::add))
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/role/update").and(accept(APPLICATION_JSON)), handler::update));
     }
 
 }

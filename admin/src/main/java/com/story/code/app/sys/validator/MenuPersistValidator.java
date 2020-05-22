@@ -13,7 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class MenuPersistValidator {
 
-    public void validate(MenuPersistCommand command){
+    public void validateAdd(MenuPersistCommand command) {
         log.debug("新建菜单验证器{}", command);
+    }
+
+    public void validateUpdate(MenuPersistCommand command) {
+        log.debug("编辑菜单验证器{}", command);
     }
 }

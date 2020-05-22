@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class OrganizationPersistCommand {
 
+    private Long id;
+
     private Long parentId;
 
     private String name;

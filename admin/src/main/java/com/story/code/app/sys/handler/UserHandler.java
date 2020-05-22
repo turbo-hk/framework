@@ -15,6 +15,7 @@ import com.story.code.domain.sys.repository.UserRepository;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import com.story.code.infrastructure.tunnel.datatunnel.UserTunnelI;
 import com.story.code.infrastructure.tunnel.param.sys.UserPageListParam;
+import java.util.function.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -49,8 +50,16 @@ public class UserHandler {
     }
 
     public Mono<ServerResponse> add(ServerRequest request) {
+        return persist(request, userPersistValidator::validateAdd);
+    }
+
+    public Mono<ServerResponse> update(ServerRequest request) {
+        return persist(request, userPersistValidator::validateUpdate);
+    }
+
+    private Mono<ServerResponse> persist(ServerRequest request, Consumer<UserPersistCommand> validate) {
         TokenLoginUser loginUser = SecurityUtils.getLoginUser(request.exchange().getRequest());
-        return request.bodyToMono(UserPersistCommand.class).doOnNext(userPersistValidator::validate)
+        return request.bodyToMono(UserPersistCommand.class).doOnNext(validate)
             .map(command -> {
                 UserPersistDTO dto = userAppConverter.toDto(command);
                 dto.setLoginUser(loginUser);

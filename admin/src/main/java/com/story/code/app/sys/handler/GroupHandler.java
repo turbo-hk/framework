@@ -14,6 +14,7 @@ import com.story.code.common.ApiResponseVO;
 import com.story.code.component.page.PageComponent;
 import com.story.code.component.page.vo.PageVO;
 import com.story.code.component.saveorupdate.DataPersistComponent;
+import com.story.code.component.saveorupdate.ValidatorFunction;
 import com.story.code.infrastructure.tunnel.dataobject.sys.GroupDO;
 import com.story.code.infrastructure.tunnel.datatunnel.GroupTunnelI;
 import com.story.code.infrastructure.tunnel.param.sys.GroupPageListParam;
@@ -51,10 +52,18 @@ public class GroupHandler {
     }
 
     public Mono<ServerResponse> add(ServerRequest request) {
+        return persist(request, groupPersistValidator::validateAdd);
+    }
+
+    public Mono<ServerResponse> update(ServerRequest request) {
+        return persist(request, groupPersistValidator::validateUpdate);
+    }
+
+    private Mono<ServerResponse> persist(ServerRequest request, ValidatorFunction<GroupPersistCommand> validatorFunction) {
         TokenLoginUser loginUser = SecurityUtils.getLoginUser(request.exchange().getRequest());
         return request.bodyToMono(GroupPersistCommand.class).map(command -> {
             DataPersistComponent<GroupPersistCommand, GroupDO> component = new DataPersistComponent(command, command.getId());
-            component.addValidatorFunction(groupPersistValidator::validate);
+            component.addValidatorFunction(validatorFunction);
             component.addCreatePersistStrategyFunction(() -> {
                 GroupDO data = new GroupDO();
                 data.setName(command.getName());

@@ -44,7 +44,7 @@ public class DataPersistComponent<T, D> {
         this.validatorFunction = function;
     }
 
-    public DataPersistComponent validate(ValidatorFunction function) {
+    public DataPersistComponent validate(ValidatorFunction<T> function) {
         function.validate(command);
         return this;
     }

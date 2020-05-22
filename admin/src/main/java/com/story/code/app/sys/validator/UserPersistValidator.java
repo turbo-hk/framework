@@ -12,7 +12,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class UserPersistValidator {
-    public void validate(UserPersistCommand command){
+    public void validateAdd(UserPersistCommand command){
         log.debug("新建user验证器{}", command);
+    }
+
+    public void validateUpdate(UserPersistCommand command){
+        log.debug("编辑user验证器{}", command);
     }
 }

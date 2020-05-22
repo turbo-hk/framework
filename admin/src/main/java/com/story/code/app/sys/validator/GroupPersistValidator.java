@@ -12,7 +12,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class GroupPersistValidator {
-    public void validate(GroupPersistCommand command){
+
+    public void validateAdd(GroupPersistCommand command) {
         log.debug("新建group验证器{}", command);
+    }
+
+    public void validateUpdate(GroupPersistCommand command) {
+        log.debug("编辑group验证器{}", command);
     }
 }

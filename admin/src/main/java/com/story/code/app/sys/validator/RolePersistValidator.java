@@ -12,7 +12,12 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class RolePersistValidator {
-    public void validate(RolePersistCommand command){
+
+    public void validateAdd(RolePersistCommand command) {
         log.debug("新建role验证器{}", command);
+    }
+
+    public void validateUpdate(RolePersistCommand command) {
+        log.debug("编辑role验证器{}", command);
     }
 }

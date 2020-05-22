@@ -14,6 +14,7 @@ import com.story.code.common.ApiResponseVO;
 import com.story.code.component.page.PageComponent;
 import com.story.code.component.page.vo.PageVO;
 import com.story.code.component.saveorupdate.DataPersistComponent;
+import com.story.code.component.saveorupdate.ValidatorFunction;
 import com.story.code.domain.sys.factory.UserAuthorityFactory;
 import com.story.code.domain.sys.valueobject.MenuTreeNode;
 import com.story.code.infrastructure.tunnel.dataobject.sys.ResourceMenuDO;
@@ -61,10 +62,18 @@ public class MenuHandler {
     }
 
     public Mono<ServerResponse> add(ServerRequest request) {
+        return persist(request, menuPersistValidator::validateAdd);
+    }
+
+    public Mono<ServerResponse> update(ServerRequest request) {
+        return persist(request, menuPersistValidator::validateUpdate);
+    }
+
+    private Mono<ServerResponse> persist(ServerRequest request, ValidatorFunction<MenuPersistCommand> validatorFunction) {
         TokenLoginUser loginUser = SecurityUtils.getLoginUser(request.exchange().getRequest());
         return request.bodyToMono(MenuPersistCommand.class).map(command -> {
             DataPersistComponent<MenuPersistCommand, ResourceMenuDO> component = new DataPersistComponent(command, command.getId());
-            component.addValidatorFunction(menuPersistValidator::validate);
+            component.addValidatorFunction(validatorFunction);
             component.addCreatePersistStrategyFunction(() -> {
                 ResourceMenuDO data = new ResourceMenuDO();
                 data.setTenantId(TenantIdUtil.getTenantId());
