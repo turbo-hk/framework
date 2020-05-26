@@ -15,11 +15,6 @@ import lombok.EqualsAndHashCode;
 public class AbstractDataScopeDO extends AbstractDO {
 
     /**
-     * 数据权限组织架构uid
-     */
-    private String dataScopeOrganizationUid;
-
-    /**
      * 数据权限用户id
      */
     private Long dataScopeUserId;

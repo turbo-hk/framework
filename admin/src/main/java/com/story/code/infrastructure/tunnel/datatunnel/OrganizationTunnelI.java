@@ -5,6 +5,8 @@ package com.story.code.infrastructure.tunnel.datatunnel;
 
 import com.story.code.infrastructure.tunnel.AbstractTunnelI;
 import com.story.code.infrastructure.tunnel.dataobject.sys.OrganizationDO;
+import com.story.code.infrastructure.tunnel.param.sys.OrganizationPageListParam;
+import java.util.List;
 
 
 /**
@@ -23,10 +25,10 @@ public interface OrganizationTunnelI extends AbstractTunnelI<OrganizationDO> {
     int delete(Long id);
 
     /**
-     * 查询父ID下id最大的一条记录
+     * 分页数据
      *
-     * @param parentId
+     * @param param
      * @return
      */
-    OrganizationDO maxByParentId(Long parentId);
+    List<OrganizationDO> pageList(OrganizationPageListParam param);
 }

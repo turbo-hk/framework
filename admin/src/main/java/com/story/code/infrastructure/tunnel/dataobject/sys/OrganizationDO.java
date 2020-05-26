@@ -23,17 +23,6 @@ public class OrganizationDO extends AbstractDO {
     private Long parentId;
 
     /**
-     * 带有上下级格式的id
-     */
-    private String uid;
-
-    /**
-     * 带有上下级格式的id的父ID
-     */
-    private String parentUid;
-
-
-    /**
      * 名称
      */
     private String name;

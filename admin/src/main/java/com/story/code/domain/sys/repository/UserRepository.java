@@ -44,7 +44,6 @@ public class UserRepository {
             data.setTel(dto.getTel());
             data.setTenantId(TenantIdUtil.getTenantId());
             data.setDisabled(BooleanColumnEnum._FALSE.getBooleanValue());
-            data.setDataScopeOrganizationUid(dto.getDataScopeOrganizationUid());
             data.setDataScopeUserId(dto.getLoginUser().getLoginUserId());
             int i = userTunnel.create(data, dto.getLoginUser().getUserName());
             dto.setId(data.getId());
@@ -58,7 +57,6 @@ public class UserRepository {
             data.setPassword(dto.getPassword());
             data.setSalt(dto.getSalt());
             data.setTel(dto.getTel());
-            data.setDataScopeOrganizationUid(dto.getDataScopeOrganizationUid());
             data.setDataScopeUserId(dto.getLoginUser().getLoginUserId());
             return userTunnel.update(data, dto.getLoginUser().getUserName());
         });

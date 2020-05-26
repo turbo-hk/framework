@@ -7,6 +7,8 @@ import com.story.code.infrastructure.tunnel.AbstractTunnel;
 import com.story.code.infrastructure.tunnel.dataobject.sys.OrganizationDO;
 import com.story.code.infrastructure.tunnel.datatunnel.OrganizationTunnelI;
 import com.story.code.infrastructure.tunnel.datatunnel.database.sys.OrganizationDAO;
+import com.story.code.infrastructure.tunnel.param.sys.OrganizationPageListParam;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,8 +25,8 @@ public class OrganizationTunnel extends AbstractTunnel<OrganizationDO, Organizat
     }
 
     @Override
-    public OrganizationDO maxByParentId(Long parentId) {
-        return dao.maxByParentId(parentId);
+    public List<OrganizationDO> pageList(OrganizationPageListParam param) {
+        return dao.pageList(param);
     }
 
 }

@@ -5,6 +5,8 @@ package com.story.code.infrastructure.tunnel.datatunnel.database.sys;
 
 import com.story.code.infrastructure.tunnel.AbstractDAO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.OrganizationDO;
+import com.story.code.infrastructure.tunnel.param.sys.OrganizationPageListParam;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -25,10 +27,10 @@ public interface OrganizationDAO extends AbstractDAO<OrganizationDO> {
     int delete(@Param("id") Long id);
 
     /**
-     * 根据父id查询id最大的一个
+     * 分页
      *
-     * @param parentId
+     * @param param
      * @return
      */
-    OrganizationDO maxByParentId(@Param("parentId") Long parentId);
+    List<OrganizationDO> pageList(OrganizationPageListParam param);
 }

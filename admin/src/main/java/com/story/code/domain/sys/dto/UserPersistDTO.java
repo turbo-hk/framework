@@ -32,5 +32,4 @@ public class UserPersistDTO {
 
     private TokenLoginUser loginUser;
 
-    private String dataScopeOrganizationUid;
 }

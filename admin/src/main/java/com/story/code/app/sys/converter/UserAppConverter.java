@@ -14,7 +14,6 @@ import com.story.code.domain.dict.valueobject.DictNodeCodeEnum;
 import com.story.code.domain.dict.valueobject.DictValueVO;
 import com.story.code.domain.sys.dto.UserPersistDTO;
 import com.story.code.helper.CollectionHelper;
-import com.story.code.infrastructure.tunnel.dataobject.sys.OrganizationDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserGroupDO;
 import com.story.code.infrastructure.tunnel.dataobject.sys.UserRoleDO;
@@ -35,7 +34,7 @@ import org.springframework.stereotype.Component;
  * Created at 2020/5/8 by Storys.Zhang
  */
 @Component
-public class UserAppConverter implements RequestQueryToDatabaseParam<UserPageListQuery, UserPageListParam>,
+public class  UserAppConverter implements RequestQueryToDatabaseParam<UserPageListQuery, UserPageListParam>,
     DataObjectToValueObject<UserDO, UserPageListVO>, RequestQueryToDTO<UserPersistCommand, UserPersistDTO> {
 
     @Autowired
@@ -90,8 +89,18 @@ public class UserAppConverter implements RequestQueryToDatabaseParam<UserPageLis
         List<Long> roleIds = command.getRoleIds();
         Set<Long> dataRoleIds = userRoleTunnel.listByUserId(id).stream().map(UserRoleDO::getRoleId).collect(Collectors.toSet());
         dto.setRoleIds(new DataPersistCollectionDifferenceComponent<Long>(CollectionHelper.nullToEmpty(roleIds), dataRoleIds));
-        OrganizationDO organization = organizationTunnel.get(command.getOrganizationId());
-        dto.setDataScopeOrganizationUid(organization.getUid());
+        //OrganizationDO organization = organizationTunnel.get(command.getOrganizationId());
         return dto;
+    }
+
+    public static void main(String[] args) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 65535000; i++) {
+            builder.append(i);
+        }
+        System.out.println(builder.toString());
+        System.out.println(builder.toString().length());
+        System.out.println(65535);
+        System.out.println(Integer.MAX_VALUE);
     }
 }
