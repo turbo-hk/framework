@@ -47,6 +47,7 @@ public class SysRoutersConfiguration {
     @Bean
     public RouterFunction<ServerResponse> userRoutersFunction(UserHandler handler) {
         return RouterFunctions.route(RequestPredicates.POST("/sys/user/page").and(accept(APPLICATION_JSON)), handler::page)
+            .and(RouterFunctions.route(RequestPredicates.POST("/sys/user/current").and(accept(APPLICATION_JSON)), handler::currentUser))
             .and(RouterFunctions.route(RequestPredicates.POST("/sys/user/add").and(accept(APPLICATION_JSON)), handler::add))
             .and(RouterFunctions.route(RequestPredicates.POST("/sys/user/update").and(accept(APPLICATION_JSON)), handler::update));
     }

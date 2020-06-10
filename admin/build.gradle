@@ -24,6 +24,8 @@ dependencies {
     //implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
     implementation 'org.springframework.cloud:spring-cloud-starter-security'
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+
     //test
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         //exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

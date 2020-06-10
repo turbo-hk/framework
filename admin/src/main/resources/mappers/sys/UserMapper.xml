@@ -9,7 +9,6 @@
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="tel" jdbcType="VARCHAR" property="tel"/>
         <result column="organization_id" jdbcType="BIGINT" property="organizationId"/>
-        <result column="data_scope_organization_uid" jdbcType="VARCHAR" property="dataScopeOrganizationUid"/>
         <result column="data_scope_user_id" jdbcType="BIGINT" property="dataScopeUserId"/>
         <result column="tenant_id" jdbcType="BIGINT" property="tenantId"/>
         <result column="version" jdbcType="BIGINT" property="version"/>
@@ -39,7 +38,6 @@
         tenant_id,
         version,
         disabled,
-        data_scope_organization_uid,
         data_scope_user_id
     </sql>
 
@@ -72,7 +70,6 @@
             tenant_id,
             version,
             disabled,
-            data_scope_organization_uid,
             data_scope_user_id
         ) values(
                     #{createBy, jdbcType=VARCHAR},
@@ -90,7 +87,6 @@
             #{tenantId, jdbcType=BIGINT},
             #{version, jdbcType=BIGINT},
             #{disabled, jdbcType=TINYINT},
-            #{dataScopeOrganizationUid,jdbcType=VARCHAR},
             #{dataScopeUserId,jdbcType=BIGINT}
         )
     </insert>
@@ -112,7 +108,6 @@
             tenant_id = #{tenantId, jdbcType=BIGINT},
             version = #{version, jdbcType=BIGINT},
             disabled = #{disabled, jdbcType=TINYINT},
-            data_scope_organization_uid = #{dataScopeOrganizationUid,jdbcType=VARCHAR},
             data_scope_user_id = #{dataScopeUserId,jdbcType=BIGINT}
         where id =  #{id, jdbcType=BIGINT}
     </update>

@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class LoginCommand {
 
-    private String loginName;
+    private String userName;
 
     private String password;
 }

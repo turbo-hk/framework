@@ -35,7 +35,7 @@ public class LoginHandler {
     public Mono<ServerResponse> login(ServerRequest request) {
         return request.bodyToMono(LoginCommand.class)
             .filter(Objects::nonNull)
-            .map(command -> this.authenticationManager.authenticate(new TokenAuthentication(command.getLoginName(), command.getPassword())))
+            .map(command -> this.authenticationManager.authenticate(new TokenAuthentication(command.getUserName(), command.getPassword())))
             .flatMap(authenticationMono -> authenticationMono)
             .subscribeOn(Schedulers.elastic())
             .doOnSuccess(ReactiveSecurityContextHolder::withAuthentication)

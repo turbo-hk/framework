@@ -39,6 +39,10 @@ public class UserHandler {
     @Autowired
     private UserPersistValidator userPersistValidator;
 
+    public Mono<ServerResponse> currentUser(ServerRequest request){
+        return ServerResponse.ok().bodyValue(ApiResponseVO.<UserDO>create().data(new UserDO()).buildSuccess());
+    }
+
     public Mono<ServerResponse> page(ServerRequest request) {
         return request.bodyToMono(UserPageListQuery.class).map(query -> {
                 PageComponent<UserPageListParam, UserDO, UserPageListVO> component = new PageComponent(userAppConverter.toParam(query), query.getPage());
